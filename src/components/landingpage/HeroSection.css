@@ -1,0 +1,187 @@
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 125px 40px 125px;
+    background-color: #fff;
+    transition: all 0.5s ease;
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.section img {
+    width: 50%;
+    height: auto;
+    border-radius: 20px;
+    z-index: 199;
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: transform 0.5s ease;
+}
+
+.section img:hover {
+    transform: perspective(1000px) rotateY(0deg) scale(1.02);
+}
+
+.section-content {
+    width: 50%;
+    margin-left: 60px;
+    z-index: 199;
+    position: relative;
+}
+
+.section h1 {
+    color: #fff;
+    font-size: 3.5em;
+    margin-bottom: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    animation: gradientFlow 8s ease infinite;
+}
+
+.section p {
+    color: #e2e8f0;
+    font-size: 1.2em;
+    line-height: 1.8;
+    margin-right: 5px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px rgba(203, 126, 53, 0.1);
+}
+
+.section-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #cb7e35, #d1a275);
+    color: #fff;
+    font-size: 1.1em;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(203, 126, 53, 0.3);
+}
+
+.section-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.section-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(203, 126, 53, 0.4);
+}
+
+.section-button:hover::before {
+    left: 100%;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #cb7e35, #d1a275);
+    clip-path: ellipse(75% 100% at 50% -20%);
+    z-index: 2;
+    opacity: 0.8;
+}
+
+/* Futuristische achtergrond elementen */
+.section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(203, 126, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(209, 162, 117, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+/* Animatie voor gradient tekst */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Floating animation voor de afbeelding */
+@keyframes float {
+    0% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(0px);
+    }
+    50% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(-10px);
+    }
+    100% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(0px);
+    }
+}
+
+.section img {
+    animation: float 6s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+    .section {
+        flex-direction: column;
+        padding: 120px 20px 40px;
+        text-align: center;
+    }
+
+    .section h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        padding: 0 20px;
+    }
+
+    .section p {
+        font-size: 1.1em;
+        padding: 0 20px;
+        margin-bottom: 30px;
+    }
+
+    .section img {
+        width: 90%;
+        margin: 40px 0;
+        transform: none;
+        animation: none;
+    }
+
+    .section-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .section::before {
+        clip-path: ellipse(150% 100% at 50% -50%);
+    }
+
+    .section-button {
+        padding: 12px 30px;
+        font-size: 1em;
+    }
+}

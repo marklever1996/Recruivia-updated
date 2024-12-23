@@ -1,0 +1,294 @@
+.hero-section {
+    background-size: cover;
+    background-position: center;
+    height: 500px; /* Verhoogde hoogte */
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: #000;
+    padding: 20px;
+    padding-top: calc(70px + 5rem);
+    margin: 50px auto; /* Maakt ruimte aan de boven- en onderkant */
+    width: 80%; /* Maakt de sectie smaller */
+    border-radius: 10px; /* Maakt de randen rond */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lichte schaduw voor meer diepte */
+}
+
+.hero-content {
+    max-width: 800px;
+    margin-left: 20px; /* Zorgt dat de content naar links uitgelijnd is */
+}
+
+.hero-content h1 {
+    font-size: 2.5rem; /* Iets grotere tekst voor meer impact */
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero-content h2 {
+    font-size: 1.8rem; /* Verhoogde tekstgrootte */
+    margin-bottom: 1rem;
+    color: #000;
+    font-weight: 500;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #cb7e35;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.cta-button:hover {
+    background-color: #d1a275;
+}
+/* Section 2 */
+/* Info Section Styling */
+.info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centreert de sectie horizontaal */
+    justify-content: center; /* Centreert de sectie verticaal */
+    padding: 50px 20px; /* Ruimte rondom de sectie */
+    margin: 0 auto; /* Centreert de sectie op het scherm */
+    max-width: 800px; /* Beperkt de breedte van de sectie */
+    text-align: center; /* Zorgt ervoor dat de tekst gecentreerd is */
+}
+
+.info-section h1 {
+    font-size: 2rem; /* Grote koptekst */
+    margin-bottom: 1rem; /* Ruimte onder de kop */
+    font-weight: 700; /* Vetgedrukt */
+    color: #333; /* Donkere kleur voor contrast */
+}
+.info-section h1 span {
+    color: #cb7e35;
+}
+.info-section p {
+    font-size: 1rem; /* Standaard tekstgrootte */
+    line-height: 1.5; /* Ruimte tussen de regels */
+    color: #555; /* Iets lichtere kleur voor de tekst */
+    max-width: 700px; /* Beperkt de breedte van de paragraaf */
+}
+/* Features Section Styling */
+.features-section {
+    display: flex;
+    justify-content: space-around; /* Zorgt voor ruimte tussen de containers */
+    align-items: stretch; /* Zorgt dat de containers dezelfde hoogte hebben */
+    padding: 50px 20px; /* Ruimte rondom de sectie */
+    margin: 0 auto; /* Centreert de sectie op het scherm */
+    max-width: 1200px; /* Beperkt de breedte van de sectie */
+}
+
+.feature-container {
+    background-color: #fff0c5; /* Lichte achtergrondkleur voor contrast */
+    padding: 20px;
+    border-radius: 10px; /* Ronde hoeken */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lichte schaduw voor diepte */
+    flex: 1; /* Zorgt dat alle containers evenveel ruimte innemen */
+    margin: 0 10px; /* Ruimte tussen de containers */
+    text-align: center; /* Zorgt dat de tekst gecentreerd is binnen de container */
+}
+.feature-container i {
+    font-size: 2.5rem; /* Grootte van het icoon */
+    color: rgb(193, 193, 193); /* Kleur van het icoon */
+    margin-bottom: 15px; /* Ruimte tussen het icoon en de koptekst */
+}
+
+.feature-container h2 {
+    font-size: 1.5rem; /* Koptekst grootte */
+    margin-bottom: 1rem; /* Ruimte onder de kop */
+    font-weight: 700; /* Vetgedrukt */
+    color: #333; /* Donkere kleur voor contrast */
+}
+
+.feature-container p {
+    font-size: 1rem; /* Standaard tekstgrootte */
+    line-height: 1.5; /* Ruimte tussen de regels */
+    color: #555; /* Iets lichtere kleur voor de tekst */
+}
+/* Control Section Styling */
+.control-section {
+    display: flex;
+    justify-content: center; /* Centreert de sectie horizontaal */
+    align-items: center; /* Centreert de sectie verticaal */
+    padding: 50px 20px; /* Ruimte rondom de sectie */
+    margin: 0 auto; /* Centreert de sectie op het scherm */
+    max-width: 800px; /* Beperkt de breedte van de sectie */
+    text-align: center; /* Zorgt ervoor dat de tekst gecentreerd is */
+}
+
+.control-content h2 {
+    font-size: 2rem; /* Grote koptekst */
+    margin-bottom: 1rem; /* Ruimte onder de kop */
+    font-weight: 700; /* Vetgedrukt */
+    color: #333; /* Donkere kleur voor contrast */
+}
+.control-section h2 span {
+    color: #cb7e35;
+}
+.control-content p {
+    font-size: 1rem; /* Standaard tekstgrootte */
+    line-height: 1.5; /* Ruimte tussen de regels */
+    color: #555; /* Iets lichtere kleur voor de tekst */
+    max-width: 700px; /* Beperkt de breedte van de paragraaf */
+    margin: 0 auto; /* Centreert de tekst in de container */
+}
+/* Video Section Styling */
+.video-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 20px;
+    margin: 0 auto;
+    max-width: 1000px; /* Beperkt de breedte van de sectie */
+    text-align: center;
+}
+.video-section h2 {
+    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #cb7e35;
+}
+.video-container {
+    margin-bottom: 0px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.video-container video {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.pricing-section {
+    position: relative;
+    overflow: hidden; 
+}
+.pricing-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, #cb7e35,  #d1a275);
+    clip-path: ellipse(90% 25% at 50% 98%); 
+    z-index: 2; 
+}
+.pricing-container {
+    position: relative;
+    z-index: 3; 
+}
+.pricing-section .pricing-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+.pricing-box {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px #cb7e35;
+    padding: 20px;
+    flex: 1;
+    max-width: 300px;
+    text-align: left;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+@media (max-width: 768px) {
+    .pricing-section .pricing-container {
+        flex-direction: column; 
+        align-items: center;
+        gap: 30px;
+    }
+
+    .pricing-box {
+        width: 100%; 
+        max-width: none; 
+    }
+}
+.title-box {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+.pricing-box.premium .title-box {
+    background-color: lightgreen;
+}
+.title-box h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.details-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    text-align: left;
+}
+
+.details-box h4 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+    color: #777;
+}
+
+.details-box .price {
+    font-size: 2em;
+    font-weight: bold;
+    color: #cb7e35;
+    margin: 10px 0;
+}
+
+.details-box p {
+    font-size: 1em;
+    color: #000;
+    margin: 10px 0;
+}
+.details-box p img {
+    width: 20px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.details-box button {
+    background-color: #cb7e35;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: block;
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    margin: 20px auto 0 auto; /* Updated margin to center the button */
+}
+.details-box button:hover {
+    color: #cb7e35;
+    background-color: #fff;
+    border: 1px solid #cb7e35;
+}
+.details-box button a:hover {
+    color: #cb7e35;
+}
