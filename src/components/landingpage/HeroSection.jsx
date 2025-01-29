@@ -14,7 +14,7 @@ const HeroSection = () => {
                     Ontdek hoe ons platform je recruitmentstrategie naar een hoger niveau tilt – eenvoudig, 
                     efficiënt, en toekomstgericht.
                 </p>
-                <Link to="/register" className="section-button">Registreer</Link>
+                <Link to="/register" className="section-button">Probeer gratis</Link>
             </div>
         </section>
     );

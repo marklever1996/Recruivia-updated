@@ -1,174 +1,142 @@
-.dashboard-container {
-    max-width: 1400px;
+.dashboard {
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    min-height: 100vh;
-    padding-top: calc(64px + 2rem);
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
 }
 
-/* Welcome Section */
+/* Welkom sectie */
 .welcome-section {
-    background: linear-gradient(135deg, #cb7e35 0%, #d1a275 100%);
-    border-radius: 20px;
-    padding: 2rem;
-    color: white;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.welcome-text h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+.welcome-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: #1a1a1a;
 }
 
-.welcome-text p {
-    opacity: 0.9;
+.welcome-subtitle {
+    color: #666;
+    font-size: 1rem;
 }
 
-/* Quick Actions */
-.quick-actions {
+/* Vacature Overzicht */
+.vacancy-overview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 2rem;
 }
 
-.action-card {
+.quick-action {
     padding: 1.5rem;
-    border-radius: 15px;
-    color: white;
-    cursor: pointer;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
     transition: all 0.3s ease;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.action-icon {
-    font-size: 1.5rem;
+.quick-action:hover {
+    border-color: #3d8fdc;
+    transform: translateY(-2px);
 }
 
-.action-card h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-/* Statistics Grid */
-.statistics-grid {
+/* Metrics Grid */
+.metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
-.stat-card {
-    background: white;
+.metric-card {
     padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    transition: transform 0.3s ease;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
 }
 
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-icon {
-    font-size: 2rem;
-    color: #cb7e35;
-}
-
-.stat-info h3 {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.stat-info p {
-    margin: 0.5rem 0 0;
+.metric-value {
     font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
+    font-weight: 500;
+    color: #1a1a1a;
 }
 
-/* Recent Interviews */
-.recent-interviews {
-    background: white;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.recent-interviews h2 {
-    margin-bottom: 1.5rem;
-    color: #333;
-}
-
-.interviews-table {
-    width: 100%;
-}
-
-.table-header {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 10px;
-    font-weight: 600;
+.metric-label {
     color: #666;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
 }
 
-.table-row {
+/* Recent Vacancies */
+.recent-vacancies {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.vacancy-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.vacancy-item {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr;
-    padding: 1rem;
+    grid-template-columns: 1fr auto auto auto;
+    padding: 1rem 1.5rem;
     border-bottom: 1px solid #eee;
     align-items: center;
+    gap: 1rem;
 }
 
-.status {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 0.9rem;
+.vacancy-item:last-child {
+    border-bottom: none;
+}
+
+.vacancy-title {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.vacancy-department {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.vacancy-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
     font-weight: 500;
 }
 
-.status.completed {
-    background: #e8f5e9;
-    color: #2e7d32;
+.status-active {
+    background: #e6f3ff;
+    color: #3d8fdc;
 }
 
-.status.pending {
-    background: #fff3e0;
-    color: #ef6c00;
+.status-draft {
+    background: #f5f5f5;
+    color: #666;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .dashboard-container {
+    .dashboard {
         padding: 1rem;
+        gap: 1.5rem;
     }
 
-    .welcome-section {
-        padding: 1.5rem;
-    }
-
-    .welcome-text h1 {
-        font-size: 1.5rem;
-    }
-
-    .table-header,
-    .table-row {
-        grid-template-columns: 1fr;
+    .vacancy-item {
+        grid-template-columns: 1fr auto;
         gap: 0.5rem;
-    }
-
-    .table-header span:not(:first-child),
-    .table-row span:not(:first-child) {
-        display: none;
     }
 } 

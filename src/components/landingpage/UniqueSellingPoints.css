@@ -1,0 +1,124 @@
+.usp-section {
+    padding: 8rem 2rem;
+    background: linear-gradient(to bottom, #f8fafc, #fff);
+    position: relative;
+    overflow: hidden;
+}
+
+.usp-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.usp-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.usp-header h2 {
+    font-size: 3rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.usp-header p {
+    color: #4b5563;
+    font-size: 1.25rem;
+}
+
+.usp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.usp-card {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.usp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1);
+    border-color: #f97316;
+}
+
+.usp-icon {
+    font-size: 2.5rem;
+    color: #f97316;
+    margin-bottom: 1.5rem;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(249, 115, 22, 0.1);
+    border-radius: 16px;
+    margin: 0 auto 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.usp-card:hover .usp-icon {
+    background: #f97316;
+    color: #fff;
+    transform: scale(1.1) rotate(10deg);
+}
+
+.usp-card h3 {
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.usp-card p {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.usp-stat {
+    font-size: 1.1rem;
+    color: #f97316;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    background: rgba(249, 115, 22, 0.1);
+    border-radius: 12px;
+    display: inline-block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .usp-section {
+        padding: 4rem 1rem;
+    }
+
+    .usp-header h2 {
+        font-size: 2rem;
+    }
+
+    .usp-grid {
+        gap: 1.5rem;
+    }
+
+    .usp-card {
+        padding: 2rem;
+    }
+} 

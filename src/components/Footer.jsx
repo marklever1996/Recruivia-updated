@@ -1,68 +1,108 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa';
-import '../styles/Footer.css';
+import { FaLinkedin, FaTwitter, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import logo from '../assets/images/logo.png';
+import './Footer.css';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
+    const footerLinks = {
+        product: {
+            title: "Product",
+            links: [
+                { name: "Features", path: "/features" },
+                { name: "Prijzen", path: "/pricing" },
+                { name: "Demo", path: "/register" },
+                { name: "Roadmap", path: "/roadmap" }
+            ]
+        },
+        resources: {
+            title: "Resources",
+            links: [
+                { name: "Blog", path: "/blog" },
+                { name: "Documentatie", path: "/docs" },
+                { name: "Support", path: "/support" },
+                { name: "API", path: "/api" }
+            ]
+        },
+        company: {
+            title: "Bedrijf",
+            links: [
+                { name: "Over ons", path: "/about" },
+                { name: "Contact", path: "/contact" },
+                { name: "Careers", path: "/careers" },
+                { name: "Partners", path: "/partners" }
+            ]
+        },
+        legal: {
+            title: "Legal",
+            links: [
+                { name: "Privacy", path: "/privacy" },
+                { name: "Voorwaarden", path: "/terms" },
+                { name: "Cookie Policy", path: "/cookies" },
+                { name: "Security", path: "/security" }
+            ]
+        }
+    };
+
     return (
         <footer className="footer">
             <div className="footer-content">
-                <div className="footer-section">
-                    <h3>Recruivia</h3>
-                    <p>AI-gedreven recruitment software voor de moderne recruiter.</p>
-                    <div className="social-links">
-                        <a href="https://www.instagram.com/leverwebdesign/" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           aria-label="Instagram">
-                            <FaInstagram />
-                        </a>
-                        <a href="https://www.linkedin.com/in/mark-lever-5b2b07121/" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           aria-label="LinkedIn">
-                            <FaLinkedin />
-                        </a>
-                        <a href="https://github.com/yourusername" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           aria-label="GitHub">
-                            <FaGithub />
-                        </a>
+                <div className="footer-main">
+                    <div className="footer-brand">
+                        <Link to="/" className="footer-logo">
+                            <img src={logo} alt="Recruivia" />
+                        </Link>
+                        <p className="footer-tagline">
+                            Transformeer je recruitmentproces met AI
+                        </p>
+                        <div className="footer-social">
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                                <FaLinkedin />
+                            </a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                <FaTwitter />
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                <FaInstagram />
+                            </a>
+                            <a href="mailto:info@recruivia.com">
+                                <FaEnvelope />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="footer-links">
+                        {Object.values(footerLinks).map((section) => (
+                            <div key={section.title} className="footer-section">
+                                <h3>{section.title}</h3>
+                                <ul>
+                                    {section.links.map((link) => (
+                                        <li key={link.name}>
+                                            <Link to={link.path}>{link.name}</Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                <div className="footer-section">
-                    <h4>Links</h4>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/how-it-works">Hoe het werkt</Link></li>
-                        <li><Link to="/#pricing">Prijzen</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
-                    </ul>
+                <div className="footer-bottom">
+                    <div className="footer-info">
+                        <p>&copy; {currentYear} Recruivia. Alle rechten voorbehouden.</p>
+                        <address>
+                            Recruivia B.V. | KvK: 12345678 | BTW: NL123456789B01<br />
+                            Hoofdkantoor: Hyacinthstraat 198, 9713 XL Groningen
+                        </address>
+                    </div>
+                    <div className="footer-certifications">
+                        <span>ISO 27001 Gecertificeerd</span>
+                        <span>AVG Compliant</span>
+                        <span>SOC 2 Type II</span>
+                    </div>
                 </div>
-
-                <div className="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><Link to="/privacy">Privacy Policy</Link></li>
-                        <li><Link to="/terms">Algemene Voorwaarden</Link></li>
-                        <li><Link to="/cookies">Cookie Beleid</Link></li>
-                    </ul>
-                </div>
-
-                <div className="footer-section contact">
-                    <h4>Contact</h4>
-                    <p>Email: info@recruivia.nl</p>
-                    <p>Tel: +31 (0)6 12345678</p>
-                    <p>KVK: 94208603</p>
-                </div>
-            </div>
-
-            <div className="footer-bottom">
-                <p>&copy; {currentYear} Lever Web Design. Alle rechten voorbehouden.</p>
             </div>
         </footer>
     );

@@ -1,30 +1,59 @@
 import React, { useState } from 'react';
 import WelcomeSection from '../components/dashboard/WelcomeSection';
-import QuickActions from '../components/dashboard/QuickActions';
-import StatisticsGrid from '../components/dashboard/StatisticsGrid';
-import RecentInterviews from '../components/dashboard/RecentInterviews';
+import VacancyOverview from '../components/dashboard/VacancyOverview';
+import VacancyMetrics from '../components/dashboard/VacancyMetrics';
+import RecentVacancies from '../components/dashboard/RecentVacancies';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
     const [userName] = useState('Mark');
-    const [recentInterviews] = useState([
-        { id: 1, candidate: "John Doe", position: "Senior Developer", date: "2024-03-15", status: "Completed" },
-        { id: 2, candidate: "Jane Smith", position: "UX Designer", date: "2024-03-14", status: "Pending" },
+    const [recentVacancies] = useState([
+        { 
+            id: 1, 
+            title: "Senior React Developer",
+            department: "Engineering",
+            status: "Active",
+            applicants: 12,
+            daysActive: 5
+        },
+        { 
+            id: 2, 
+            title: "UX/UI Designer",
+            department: "Design",
+            status: "Draft",
+            applicants: 0,
+            daysActive: 0
+        },
     ]);
 
-    const [statistics] = useState({
-        totalInterviews: 24,
+    const [metrics] = useState({
         activeVacancies: 8,
-        potentialCandidates: 45,
-        completedInterviews: 18
+        totalApplicants: 45,
+        averageApplicants: 12,
+        conversionRate: "18%"
     });
 
     return (
-        <div className="dashboard-container">
-            <WelcomeSection userName={userName} />
-            <QuickActions />
-            <StatisticsGrid statistics={statistics} />
-            <RecentInterviews interviews={recentInterviews} />
+        <div className="dashboard">
+            <WelcomeSection 
+                userName={userName} 
+                subtitle="Beheer je vacatures en volg de resultaten"
+            />
+            
+            <VacancyOverview 
+                quickActions={[
+                    { label: "Nieuwe Vacature", action: "create", icon: "plus" },
+                    { label: "AI Tekst Generator", action: "generate", icon: "sparkles" },
+                    { label: "Vacature Templates", action: "templates", icon: "template" }
+                ]}
+            />
+            
+            <VacancyMetrics metrics={metrics} />
+            
+            <RecentVacancies 
+                vacancies={recentVacancies}
+                title="Recent Bijgewerkte Vacatures"
+            />
         </div>
     );
 };

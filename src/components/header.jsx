@@ -65,7 +65,7 @@ const Header = () => {
                         </li>
                         <li className="nav-item">
                             <Link to="/register" className="nav-link" onClick={closeMenu}>
-                                Registreer
+                                Probeer het gratis
                             </Link>
                         </li>
                     </ul>

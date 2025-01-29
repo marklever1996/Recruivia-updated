@@ -1,26 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CallToActionService from '../components/how-it-works/CallToActionService';
 import '../styles/how-it-works.css';
 import aiThumbnail from '../assets/images/Orange And Pink Illustrative Top AI Websites YouTube Thumbnail.png';
 
 const HowItWorks = () => {
     return (
         <>
-            {/* Section 1 - Hero */}
-            <section className="hero-section" style={{ backgroundImage: `url(${aiThumbnail})` }}>
-                <div className="hero-content">
-                    <h1>AI voor Recruitment</h1>
-                    <h2>Verhoog de productiviteit van recruiters</h2>
-                    <p>
-                        Gemiddeld besteden recruiters bij bureaus 20% tot 40% van hun tijd aan administratieve taken.
-                        Laat repetitieve administratieve taken achter je en zet je tijd efficiënt in met onze AI-oplossing.
-                        <br /><br />
-                        Met behulp van Recruivia, kunnen recruiters meer tijd besteden aan het bouwen van sterke relaties met kandidaten 
-                        en klanten, waardoor de kwaliteit van elke plaatsing verbetert.
-                    </p>
-                    <Link to="/contact" className="cta-button">Probeer ons nu</Link>
-                </div>
-            </section>
+            <CallToActionService />
 
             {/* Section 2 - Info */}
             <section className="info-section">
