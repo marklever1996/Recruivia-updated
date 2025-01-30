@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/Footer';
-
+// Pre-signup pages
 import Landingpage from './pages/Landingpage';
 import HowItWorks from './pages/how-it-works';
+import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import Register from './pages/Register';
+// Post-signup pages
 import Dashboard from './pages/Dashboard';
 import Vacatures from './pages/Vacatures';
 import VacatureGenerator from './pages/VacatureGenerator';
@@ -28,6 +30,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Landingpage />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/pricing" element={<Pricing />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />

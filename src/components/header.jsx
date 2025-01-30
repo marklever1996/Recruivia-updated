@@ -54,7 +54,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/#pricing" className="nav-link" onClick={closeMenu}>
+                            <Link to="/pricing" className="nav-link" onClick={closeMenu}>
                                 Prijzen
                             </Link>
                         </li>

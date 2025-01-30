@@ -7,7 +7,6 @@ import DemoSection from '../components/landingpage/DemoSection';
 import UniqueSellingPoints from '../components/landingpage/UniqueSellingPoints';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
-import '../styles/Landingpage.css';
 
 const Landingpage = () => {
     return (
