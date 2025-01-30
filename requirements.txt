@@ -1,0 +1,7 @@
+react-dropzone
+react-icons
+react-router-dom
+framer-motion
+react-motion-hover-effect
+
+    

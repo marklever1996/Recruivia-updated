@@ -184,17 +184,31 @@ const OurApproach = () => {
                                     )}
                                     {activeFeature === 2 && (
                                         <div className="vacancy-preview">
-                                            <div className="vacancy-header">
-                                                <div className="company-placeholder"></div>
-                                                <div className="title-placeholder"></div>
-                                            </div>
-                                            <div className="vacancy-sections">
-                                                <div className="section">
-                                                    <div className="section-title"></div>
-                                                    <div className="section-content">
-                                                        <div className="content-line"></div>
-                                                        <div className="content-line"></div>
-                                                    </div>
+                                            <div className="vacancy-content">
+                                                {/* Titel sectie */}
+                                                <div className="content-line title-line"></div>
+                                                <div className="content-line title-line-small"></div>
+                                                
+                                                {/* Functie details */}
+                                                <div className="content-group">
+                                                    <div className="content-line"></div>
+                                                    <div className="content-line line-short"></div>
+                                                    <div className="content-line line-medium"></div>
+                                                </div>
+
+                                                {/* Verantwoordelijkheden */}
+                                                <div className="content-group">
+                                                    <div className="content-line"></div>
+                                                    <div className="content-line line-medium"></div>
+                                                    <div className="content-line line-long"></div>
+                                                    <div className="content-line line-short"></div>
+                                                </div>
+
+                                                {/* Eisen */}
+                                                <div className="content-group">
+                                                    <div className="content-line"></div>
+                                                    <div className="content-line line-medium"></div>
+                                                    <div className="content-line line-short"></div>
                                                 </div>
                                             </div>
                                         </div>

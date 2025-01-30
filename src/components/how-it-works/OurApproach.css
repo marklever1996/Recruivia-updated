@@ -176,6 +176,7 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    max-height: calc(100vh - 400px);
 }
 
 .feature-preview img {
@@ -214,14 +215,10 @@
 }
 
 .preview-placeholder {
+    padding: 1rem;
     background: #fff;
-    border-radius: 16px;
-    padding: 2rem;
-    min-height: 300px;
-    border: 1px solid rgba(249, 115, 22, 0.1);
-    box-shadow: 
-        0 25px 50px -12px rgba(249, 115, 22, 0.08),
-        0 0 0 1px rgba(249, 115, 22, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Transcript Preview */
@@ -327,43 +324,59 @@
 }
 
 /* Vacancy Preview */
-.vacancy-header {
-    margin-bottom: 2rem;
+.vacancy-preview {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-height: 280px;
+    overflow: hidden;
 }
 
-.company-placeholder {
-    height: 20px;
-    width: 150px;
-    background: rgba(249, 115, 22, 0.1);
-    border-radius: 4px;
-    margin-bottom: 1rem;
+.vacancy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.title-placeholder {
-    height: 30px;
-    width: 80%;
-    background: rgba(249, 115, 22, 0.15);
-    border-radius: 4px;
-}
-
-.section {
-    margin-bottom: 1.5rem;
-}
-
-.section-title {
-    height: 12px;
-    width: 120px;
-    background: rgba(249, 115, 22, 0.1);
-    border-radius: 4px;
-    margin-bottom: 1rem;
+.content-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.5rem 0;
 }
 
 .content-line {
-    height: 8px;
+    height: 6px;
     background: rgba(249, 115, 22, 0.1);
-    border-radius: 4px;
-    margin: 0.5rem 0;
+    border-radius: 3px;
     animation: shimmer 2s infinite;
+}
+
+.title-line {
+    height: 8px;
+    width: 80%;
+    background: rgba(249, 115, 22, 0.15);
+    margin-bottom: 0.25rem;
+}
+
+.title-line-small {
+    height: 6px;
+    width: 40%;
+    background: rgba(249, 115, 22, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.line-short {
+    width: 30%;
+}
+
+.line-medium {
+    width: 60%;
+}
+
+.line-long {
+    width: 90%;
 }
 
 /* Match Preview */
@@ -400,9 +413,18 @@
 }
 
 @keyframes shimmer {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
+    0% {
+        opacity: 0.5;
+        transform: translateX(-10px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0.5;
+        transform: translateX(-10px);
+    }
 }
 
 @keyframes progress {

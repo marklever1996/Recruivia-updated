@@ -11,7 +11,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Vacatures from './pages/Vacatures';
 import VacatureGenerator from './pages/VacatureGenerator';
-
+import NewMeeting from './components/dashboard/gesprek-opnemen/NewMeeting';
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
     const isAuthenticated = false; // Vervang dit later met echte auth check
@@ -36,6 +36,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/vacatures" element={<Vacatures />} />
                 <Route path="/vacatures/generator" element={<VacatureGenerator />} />
+                <Route path="/new-meeting" element={<NewMeeting />} />
                 {/* <Route 
                     path="/dashboard" 
                     element={

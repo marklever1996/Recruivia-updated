@@ -1,142 +1,217 @@
 .dashboard {
-    max-width: 1200px;
+    min-height: 100vh;
+    background: #f9fafb;
+    padding: 6rem;
+}
+
+.dashboard-grid {
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem;
     display: grid;
+    grid-template-columns: 1fr 350px;
     gap: 2rem;
-    grid-template-columns: 1fr;
 }
 
-/* Welkom sectie */
+/* Welcome Section */
 .welcome-section {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.welcome-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.welcome-header h1 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.last-activity {
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
 }
 
-.welcome-title {
-    font-size: 1.75rem;
-    font-weight: 500;
-    color: #1a1a1a;
-}
-
-.welcome-subtitle {
-    color: #666;
-    font-size: 1rem;
-}
-
-/* Vacature Overzicht */
-.vacancy-overview {
+.quick-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
 
-.quick-action {
-    padding: 1.5rem;
-    background: #fff;
+.stat-item {
+    padding: 1rem;
+    background: #f8fafc;
     border-radius: 12px;
-    border: 1px solid #eee;
-    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Quick Actions */
+.quick-actions {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.quick-actions h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1.5rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.action-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
     cursor: pointer;
+}
+
+.action-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
+    background: white;
+}
+
+.action-card:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+.action-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 8px;
+    background: var(--accent-color);
+    color: white;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
 }
 
-.quick-action:hover {
-    border-color: #3d8fdc;
-    transform: translateY(-2px);
+.action-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
 }
 
-/* Metrics Grid */
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+.action-card p {
+    font-size: 0.8rem;
+    color: #6b7280;
 }
 
-.metric-card {
+/* Recent Activity */
+.recent-activity {
+    background: white;
+    border-radius: 16px;
     padding: 1.5rem;
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #eee;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.metric-value {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #1a1a1a;
+.recent-activity h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1.5rem;
 }
 
-.metric-label {
-    color: #666;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-}
-
-/* Recent Vacancies */
-.recent-vacancies {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #eee;
-    overflow: hidden;
-}
-
-.vacancy-list {
+.activity-list {
     display: flex;
     flex-direction: column;
-}
-
-.vacancy-item {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #eee;
-    align-items: center;
     gap: 1rem;
 }
 
-.vacancy-item:last-child {
-    border-bottom: none;
+.activity-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #f8fafc;
+    align-items: center;
 }
 
-.vacancy-title {
-    font-weight: 500;
-    color: #1a1a1a;
+.activity-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
-.vacancy-department {
-    color: #666;
+.activity-item.interview .activity-icon { background: #4F46E5; }
+.activity-item.vacancy .activity-icon { background: #0EA5E9; }
+.activity-item.match .activity-icon { background: #10B981; }
+
+.activity-content h3 {
     font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
 }
 
-.vacancy-status {
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
+.activity-content p {
     font-size: 0.875rem;
-    font-weight: 500;
+    color: #6b7280;
 }
 
-.status-active {
-    background: #e6f3ff;
-    color: #3d8fdc;
+.activity-time {
+    font-size: 0.75rem;
+    color: #6b7280;
 }
 
-.status-draft {
-    background: #f5f5f5;
-    color: #666;
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .dashboard {
         padding: 1rem;
-        gap: 1.5rem;
     }
-
-    .vacancy-item {
-        grid-template-columns: 1fr auto;
-        gap: 0.5rem;
+    
+    .quick-stats {
+        grid-template-columns: 1fr;
     }
 } 

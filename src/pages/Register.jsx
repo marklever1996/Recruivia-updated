@@ -37,7 +37,6 @@ const Register = () => {
                 >
                     <div className="register-header">
                         <h1>Start gratis met Recruivia</h1>
-                        <p>Geen creditcard nodig • 14 dagen gratis • Volledig platform</p>
                     </div>
 
                     <div className="auth-options">

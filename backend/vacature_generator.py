@@ -200,7 +200,7 @@ def generate_vacature_text_as_html(
         secundaire_arbeidsvoorwaarden, 
         specifieke_taken, 
         soft_skills,
-        hard_skills, 
+        hard_skills,
         organisatie_cultuur, 
         collegas,
         geschiedenis,
@@ -209,7 +209,7 @@ def generate_vacature_text_as_html(
         doelen,
         missie_visie_kernwaarden,
         maatschappelijke_bijdrage
-        )
+    )
 
     messages = [
         {"role": "system", "content": "Je bent een assistent die helpt bij het genereren van vacatureteksten."},

@@ -1,39 +1,36 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaMicrophone, FaBrain, FaSearch, FaFileAlt } from 'react-icons/fa';
+import { FaMicrophone, FaFileAlt, FaUserCheck, FaChartLine } from 'react-icons/fa';
 
 const QuickActions = () => {
     const navigate = useNavigate();
 
     const actions = [
-        { 
-            id: 1, 
-            title: "Nieuw Interview", 
-            icon: <FaMicrophone />, 
-            color: "#4CAF50",
-            path: "/interviews/new"
+        {
+            icon: <FaMicrophone />,
+            title: "Gesprek opnemen",
+            description: "Start opname",
+            color: "#4F46E5",
+            path: "/new-meeting"
         },
-        { 
-            id: 2, 
-            title: "AI Matching", 
-            icon: <FaBrain />, 
-            color: "#2196F3",
-            path: "/matching"
+        {
+            icon: <FaFileAlt />,
+            title: "Vacature maken",
+            description: "AI-vacaturetekst",
+            color: "#0EA5E9",
         },
-        { 
-            id: 3, 
-            title: "Zoek Kandidaat", 
-            icon: <FaSearch />, 
-            color: "#9C27B0",
-            path: "/kandidaten"
+        {
+            icon: <FaUserCheck />,
+            title: "Match analyse",
+            description: "CV matching",
+            color: "#10B981",
         },
-        { 
-            id: 4, 
-            title: "Vacatures", 
-            icon: <FaFileAlt />, 
-            color: "#FF9800",
-            path: "/vacatures"
+        {
+            icon: <FaChartLine />,
+            title: "Prestaties",
+            description: "Recruiter feedback",
+            color: "#8B5CF6"
         }
     ];
 
@@ -42,26 +39,26 @@ const QuickActions = () => {
     };
 
     return (
-        <motion.div 
-            className="quick-actions"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-        >
-            {actions.map((action) => (
-                <motion.div 
-                    key={action.id}
-                    className="action-card"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    style={{ backgroundColor: action.color }}
-                    onClick={() => handleActionClick(action.path)}
-                >
-                    <div className="action-icon">{action.icon}</div>
-                    <h3>{action.title}</h3>
-                </motion.div>
-            ))}
-        </motion.div>
+        <div className="quick-actions">
+            <h2>Quick Actions</h2>
+            <div className="actions-grid">
+                {actions.map((action, index) => (
+                    <motion.div
+                        key={action.title}
+                        className="action-card"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        style={{ '--accent-color': action.color }}
+                        onClick={() => handleActionClick(action.path)}
+                    >
+                        <div className="action-icon">{action.icon}</div>
+                        <h3>{action.title}</h3>
+                        <p>{action.description}</p>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
     );
 };
 
