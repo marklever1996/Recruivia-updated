@@ -12,6 +12,11 @@ import Dashboard from './pages/Dashboard';
 import Vacatures from './pages/Vacatures';
 import VacatureGenerator from './pages/VacatureGenerator';
 import NewMeeting from './components/dashboard/gesprek-opnemen/NewMeeting';
+import ImportRecordings from './components/dashboard/gesprek-opnemen/ImportRecordings';
+import CreateVacancy from './components/dashboard/create-vacancy/CreateVacancy';
+import VacancyPreview from './components/dashboard/create-vacancy/VacancyPreview';
+import MatchAnalysis from './components/dashboard/match-analysis/MatchAnalysis';
+
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
     const isAuthenticated = false; // Vervang dit later met echte auth check
@@ -37,6 +42,10 @@ function App() {
                 <Route path="/vacatures" element={<Vacatures />} />
                 <Route path="/vacatures/generator" element={<VacatureGenerator />} />
                 <Route path="/new-meeting" element={<NewMeeting />} />
+                <Route path="/import-recording" element={<ImportRecordings />} />
+                <Route path="/create-vacancy" element={<CreateVacancy />} />
+                <Route path="/vacancy-preview" element={<VacancyPreview />} />
+                <Route path="/match-analysis" element={<MatchAnalysis />} />
                 {/* <Route 
                     path="/dashboard" 
                     element={

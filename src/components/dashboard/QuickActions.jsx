@@ -1,12 +1,40 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaMicrophone, FaFileAlt, FaUserCheck, FaChartLine } from 'react-icons/fa';
+import { 
+    FaMicrophone, 
+    FaFileAlt, 
+    FaUserCheck, 
+    FaChartLine, 
+    FaSearch,
+    FaInbox 
+} from 'react-icons/fa';
 
 const QuickActions = () => {
     const navigate = useNavigate();
 
     const actions = [
+        {
+            icon: <FaFileAlt />,
+            title: "Vacature maken",
+            description: "AI-vacaturetekst",
+            color: "#0EA5E9",
+            path: "/create-vacancy"
+        },
+        {
+            icon: <FaSearch />,
+            title: "Kandidaten zoeken",
+            description: "Database doorzoeken",
+            color: "#F59E0B",
+            path: "/search-candidates"
+        },
+        {
+            icon: <FaUserCheck />,
+            title: "Match analyse",
+            description: "CV matching",
+            color: "#10B981",
+            path: "/match-analysis"
+        },
         {
             icon: <FaMicrophone />,
             title: "Gesprek opnemen",
@@ -15,22 +43,18 @@ const QuickActions = () => {
             path: "/new-meeting"
         },
         {
-            icon: <FaFileAlt />,
-            title: "Vacature maken",
-            description: "AI-vacaturetekst",
-            color: "#0EA5E9",
+            icon: <FaMicrophone />,
+            title: "Verslag maken",
+            description: "Start opname",
+            color: "#4F46E5",
+            path: "/new-meeting"
         },
         {
-            icon: <FaUserCheck />,
-            title: "Match analyse",
-            description: "CV matching",
-            color: "#10B981",
-        },
-        {
-            icon: <FaChartLine />,
-            title: "Prestaties",
-            description: "Recruiter feedback",
-            color: "#8B5CF6"
+            icon: <FaInbox />,
+            title: "Sollicitaties",
+            description: "Beheer aanmeldingen",
+            color: "#EC4899",
+            path: "/applications"
         }
     ];
 

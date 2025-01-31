@@ -1,11 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMicrophone, FaVideo, FaUpload } from 'react-icons/fa';
 import './NewMeeting.css';
 
 const NewMeeting = () => {
+    const navigate = useNavigate();
+
     const options = [
-        
         {
             icon: <FaVideo />,
             title: "Online Meeting",
@@ -21,6 +23,10 @@ const NewMeeting = () => {
             path: "/import-recording"
         }
     ];
+
+    const handleOptionClick = (path) => {
+        navigate(path);
+    };
 
     return (
         <div className="new-meeting-page">
@@ -44,6 +50,9 @@ const NewMeeting = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 style={{ '--accent-color': option.color }}
+                                onClick={() => handleOptionClick(option.path)}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="option-icon" style={{ background: option.color }}>
                                     {option.icon}

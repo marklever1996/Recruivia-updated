@@ -1,0 +1,14 @@
+flask
+openai
+python-dotenv
+flask-cors
+PyPDF2
+SpeechRecognition
+whisper
+pydub
+librosa
+soundfile
+numpy
+torch
+torchaudio
+torchvision
