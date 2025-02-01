@@ -7,7 +7,8 @@ import {
     FaUserCheck, 
     FaChartLine, 
     FaSearch,
-    FaInbox 
+    FaInbox,
+    FaCheck
 } from 'react-icons/fa';
 
 const QuickActions = () => {
@@ -43,18 +44,18 @@ const QuickActions = () => {
             path: "/new-meeting"
         },
         {
-            icon: <FaMicrophone />,
-            title: "Verslag maken",
-            description: "Start opname",
-            color: "#4F46E5",
-            path: "/new-meeting"
-        },
-        {
             icon: <FaInbox />,
             title: "Sollicitaties",
             description: "Beheer aanmeldingen",
             color: "#EC4899",
             path: "/applications"
+        },
+        {
+            icon: <FaCheck />,
+            title: "Verbeterpunten",
+            description: "Verbeterpunten",
+            color: "#059669",
+            path: "/improvements"
         }
     ];
 

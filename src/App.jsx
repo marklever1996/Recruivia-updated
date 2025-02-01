@@ -16,6 +16,8 @@ import ImportRecordings from './components/dashboard/gesprek-opnemen/ImportRecor
 import CreateVacancy from './components/dashboard/create-vacancy/CreateVacancy';
 import VacancyPreview from './components/dashboard/create-vacancy/VacancyPreview';
 import MatchAnalysis from './components/dashboard/match-analysis/MatchAnalysis';
+import SearchCandidates from './components/dashboard/search-candidates/SearchCandidates';
+import Improvements from './components/dashboard/improvements/Improvements';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -46,6 +48,8 @@ function App() {
                 <Route path="/create-vacancy" element={<CreateVacancy />} />
                 <Route path="/vacancy-preview" element={<VacancyPreview />} />
                 <Route path="/match-analysis" element={<MatchAnalysis />} />
+                <Route path="/search-candidates" element={<SearchCandidates />} />
+                <Route path="/improvements" element={<Improvements />} />
                 {/* <Route 
                     path="/dashboard" 
                     element={

@@ -48,6 +48,7 @@ const MatchAnalysis = () => {
                 body: formData
             });
 
+
             if (!response.ok) {
                 throw new Error('Er ging iets mis bij het analyseren van het CV');
             }
