@@ -4,9 +4,9 @@ import os
 from dotenv import load_dotenv
 import json
 # Hier zijn de functies die we gebruiken
-from vacature_generator import generate_vacature_text_as_html
-from cv_analyzer import extract_text_from_pdf, analyze_cv_match
-from transcription_service import transcription_bp
+from Projecten.Recruivia.recruivia.backend.ai_api.vacature_generator import generate_vacature_text_as_html
+from Projecten.Recruivia.recruivia.backend.ai_api.cv_analyzer import extract_text_from_pdf, analyze_cv_match
+from Projecten.Recruivia.recruivia.backend.ai_api.transcription_service import transcription_bp
 
 load_dotenv()  # Laad environment variables
 
