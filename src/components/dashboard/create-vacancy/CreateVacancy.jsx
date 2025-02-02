@@ -42,9 +42,8 @@ const CreateVacancy = () => {
         setError(null);
         
         try {
-            console.log("Sending data:", formData); // Debug logging
-            
-            const response = await fetch('http://localhost:5000/api/generate-vacancy', {
+            // Eerst: Genereer vacaturetekst met AI API
+            const aiResponse = await fetch('http://localhost:5000/api/generate-vacancy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,22 +51,40 @@ const CreateVacancy = () => {
                 body: JSON.stringify(formData)
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
+            if (!aiResponse.ok) {
+                const errorData = await aiResponse.json();
                 throw new Error(errorData.error || 'Er ging iets mis bij het genereren van de vacaturetekst');
             }
 
-            const data = await response.json();
-            console.log("Received response:", data); // Debug logging
+            const aiData = await aiResponse.json();
             
-            if (data.success) {
-                localStorage.setItem('generatedVacancy', data.html);
-                navigate('/vacancy-preview');
-            } else {
-                throw new Error(data.error || 'Er ging iets mis');
+            // Daarna: Sla de vacature op in Symfony backend
+            const vacancyData = {
+                title: formData.functie,
+                company: formData.organisatie,
+                salary: formData.salaris,
+                description: aiData.html, // De gegenereerde vacaturetekst
+                location: null
+            };
+
+            const symfonyResponse = await fetch('http://localhost:8000/api/vacancies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(vacancyData)
+            });
+
+            if (!symfonyResponse.ok) {
+                throw new Error('Er ging iets mis bij het opslaan van de vacature');
             }
+
+            // Sla de gegenereerde vacature op in localStorage en navigeer
+            localStorage.setItem('generatedVacancy', aiData.html);
+            navigate('/vacancy-preview');
+
         } catch (err) {
-            console.error("Error:", err); // Debug logging
+            console.error("Error:", err);
             setError(err.message);
         } finally {
             setIsGenerating(false);
