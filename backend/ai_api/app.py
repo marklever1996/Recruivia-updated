@@ -4,9 +4,11 @@ import os
 from dotenv import load_dotenv
 import json
 # Hier zijn de functies die we gebruiken
-from Projecten.Recruivia.recruivia.backend.ai_api.vacature_generator import generate_vacature_text_as_html
-from Projecten.Recruivia.recruivia.backend.ai_api.cv_analyzer import extract_text_from_pdf, analyze_cv_match
-from Projecten.Recruivia.recruivia.backend.ai_api.transcription_service import transcription_bp
+from services.vacature_generator import generate_vacature_text_as_html
+from services.cv_analyzer import extract_text_from_pdf, analyze_cv_match
+# Tijdelijk uitgeschakeld totdat whisper is geïnstalleerd
+# from services.transcription_service import transcription_bp
+
 
 load_dotenv()  # Laad environment variables
 
@@ -17,8 +19,8 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 app = Flask(__name__)
 CORS(app)  # Dit staat cross-origin requests toe
 
-# Register blueprints
-app.register_blueprint(transcription_bp)
+# Tijdelijk uitgeschakeld
+# app.register_blueprint(transcription_bp)
 
 # Voeg een basis route toe
 @app.route('/')

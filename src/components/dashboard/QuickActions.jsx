@@ -20,7 +20,7 @@ const QuickActions = () => {
             title: "Vacature maken",
             description: "AI-vacaturetekst",
             color: "#0EA5E9",
-            path: "/create-vacancy"
+            path: "/vacancy-dashboard"
         },
         {
             icon: <FaSearch />,

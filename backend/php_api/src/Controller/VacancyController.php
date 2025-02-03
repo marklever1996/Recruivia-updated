@@ -24,6 +24,7 @@ class VacancyController extends AbstractController
             $data[] = [
                 'id' => $vacancy->getId(),
                 'title' => $vacancy->getTitle(),
+                'company' => $vacancy->getCompany(),
                 'description' => $vacancy->getDescription(),
                 'location' => $vacancy->getLocation(),
                 'salary' => $vacancy->getSalary(),

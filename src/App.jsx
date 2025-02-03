@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import Register from './pages/Register';
 // Post-signup pages
 import Dashboard from './pages/Dashboard';
+import VacancyDashboard from './components/dashboard/create-vacancy/VacancyDashboard';
 import Vacatures from './pages/Vacatures';
 import VacatureGenerator from './pages/VacatureGenerator';
 import NewMeeting from './components/dashboard/gesprek-opnemen/NewMeeting';
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/vacancy-dashboard" element={<VacancyDashboard />} />
                 <Route path="/vacatures" element={<Vacatures />} />
                 <Route path="/vacatures/generator" element={<VacatureGenerator />} />
                 <Route path="/new-meeting" element={<NewMeeting />} />
