@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaUpload, FaSpinner, FaFileAlt, FaCheck, FaPercentage } from 'react-icons/fa';
 import './MatchAnalysis.css';
+
 
 const MatchAnalysis = () => {
     const [selectedVacancy, setSelectedVacancy] = useState('');
@@ -10,19 +11,31 @@ const MatchAnalysis = () => {
     const [analysisResult, setAnalysisResult] = useState(null);
     const [error, setError] = useState(null);
 
-    // Voorbeeld vacatures (later te vervangen door echte data)
-    const vacatures = [
-        { id: 1, title: 'Senior React Developer' },
-        { id: 2, title: 'UX Designer' },
-        { id: 3, title: 'Product Manager' },
-    ];
+    const [vacancies, setVacancies] = useState([]);
+
+    useEffect(() => {
+        const fetchVacancies = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/vacancies');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch vacancies');
+                }
+                const data = await response.json();
+                setVacancies(data);
+            } catch (err) {
+                setError('Error loading vacancies: ' + err.message);
+            }
+        };
+
+        fetchVacancies();
+    }, []);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file && file.type === 'application/pdf') {
             setSelectedFile(file);
             setError(null);
-        } else {
+        } else{
             setError('Upload alstublieft een PDF bestand');
             setSelectedFile(null);
         }
@@ -85,11 +98,12 @@ const MatchAnalysis = () => {
                                 required
                             >
                                 <option value="">Kies een vacature...</option>
-                                {vacatures.map(vacature => (
-                                    <option key={vacature.id} value={vacature.id}>
-                                        {vacature.title}
+                                {vacancies.map(vacancy => (
+                                    <option key={vacancy.id} value={vacancy.id}>
+                                        {vacancy.title}
                                     </option>
                                 ))}
+
                             </select>
                         </div>
 

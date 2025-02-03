@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaStar, FaRegStar, FaFilter, FaEllipsisH, FaUserCircle, FaChevronDown } from 'react-icons/fa';
-import './SearchCandidates.css';
+import { FaSearch, FaStar, FaRegStar, FaFilter, FaUserCircle, FaChevronDown, FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import './MatchingDashboard.css';
 
-const SearchCandidates = () => {
+const MatchingDashboard = () => {
+    const navigate = useNavigate();
     const [selectedVacancy, setSelectedVacancy] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -137,17 +139,14 @@ const SearchCandidates = () => {
         });
     };
 
+    const handleCreateVacancy = () => {
+        navigate('/create-vacancy');
+    };
+
     return (
-        <div className="search-candidates">
-            <div className="search-container">
-                <motion.div 
-                    className="search-header"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                >
-                    <h1>Talent Pipeline</h1>
-                    
-                    {/* Vacature selector */}
+        <div className="matching-dashboard">
+            <div className="controls-container">
+                <div className="top-controls">
                     <div className="vacancy-selector">
                         <select 
                             value={selectedVacancy}
@@ -164,7 +163,7 @@ const SearchCandidates = () => {
                     </div>
 
                     <div className="search-controls">
-                        <div className="search-bar">
+                        <div className="search-field">
                             <FaSearch className="search-icon" />
                             <input
                                 type="text"
@@ -173,89 +172,103 @@ const SearchCandidates = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        <div className="filter-section">
-                            <button className="filter-button">
-                                <FaFilter />
-                                Filters
-                                <FaChevronDown className="chevron-icon" />
-                            </button>
-                            <select 
-                                className="sort-select"
-                                value={sortBy}
-                                onChange={(e) => setSortBy(e.target.value)}
-                            >
-                                <option value="match">Match Score ↓</option>
-                                <option value="recent">Recent Actief</option>
-                                <option value="experience">Ervaring</option>
-                            </select>
+                        <button className="filter-button">
+                            <FaFilter />
+                            <span>Filters</span>
+                            <FaChevronDown className="chevron-icon" />
+                        </button>
+                        <select 
+                            className="sort-select"
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                        >
+                            <option value="match">Match Score ↓</option>
+                            <option value="recent">Recent Actief</option>
+                            <option value="experience">Ervaring</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            {!selectedVacancy ? (
+                <motion.div 
+                    className="no-vacancy-selected"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                >
+                    <div className="empty-state">
+                        <div className="empty-state-content">
+                            <h2>Selecteer een vacature</h2>
+                            <p>
+                                Kies een bestaande vacature om kandidaten te matchen, 
+                                of <button 
+                                    className="inline-link"
+                                    onClick={handleCreateVacancy}
+                                >
+                                    maak een nieuwe vacature aan
+                                </button> als je nog geen passende vacature hebt.
+                            </p>
                         </div>
                     </div>
                 </motion.div>
-
-                {!selectedVacancy ? (
-                    <div className="no-vacancy-selected">
-                        <h2>Selecteer een vacature om matches te zien</h2>
-                        <p>De beste kandidaten worden getoond op basis van de geselecteerde vacature</p>
-                    </div>
-                ) : (
-                    <div className="candidates-grid">
-                        {candidates.map((candidate, index) => (
-                            <motion.div 
-                                key={candidate.id}
-                                className="candidate-card"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                            >
-                                <div className="candidate-header">
-                                    <div className="candidate-info">
-                                        {candidate.photo ? (
-                                            <img src={candidate.photo} alt={candidate.name} className="candidate-photo" />
-                                        ) : (
-                                            <FaUserCircle className="candidate-photo-placeholder" />
-                                        )}
-                                        <div>
-                                            <h3>{candidate.name}</h3>
-                                            <p>{candidate.title}</p>
-                                            <p>{candidate.location}</p>
-                                        </div>
-                                    </div>
-                                    <div className="match-score">
-                                        {candidate.matchScore}% match
+            ) : (
+                <div className="candidates-grid">
+                    {candidates.map((candidate, index) => (
+                        <motion.div 
+                            key={candidate.id}
+                            className="candidate-card"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                        >
+                            <div className="candidate-header">
+                                <div className="candidate-info">
+                                    {candidate.photo ? (
+                                        <img src={candidate.photo} alt={candidate.name} className="candidate-photo" />
+                                    ) : (
+                                        <FaUserCircle className="candidate-photo-placeholder" />
+                                    )}
+                                    <div className="candidate-details">
+                                        <h3>{candidate.name}</h3>
+                                        <p className="candidate-title">{candidate.title}</p>
+                                        <p className="candidate-location">{candidate.location}</p>
                                     </div>
                                 </div>
-
-                                <div className="matching-points">
-                                    <h4>Waarom een goede match?</h4>
-                                    <ul>
-                                        {candidate.matchingPoints.map((point, i) => (
-                                            <li key={i}>{point}</li>
-                                        ))}
-                                    </ul>
+                                <div className="match-score">
+                                    {candidate.matchScore}%
                                 </div>
+                            </div>
 
-                                <div className="skills-section">
-                                    {candidate.skills.map((skill, i) => (
-                                        <span key={i} className="skill-tag">{skill}</span>
+                            <div className="matching-points">
+                                <h4>Match details</h4>
+                                <ul>
+                                    {candidate.matchingPoints.map((point, i) => (
+                                        <li key={i}>{point}</li>
                                     ))}
-                                </div>
+                                </ul>
+                            </div>
 
-                                <div className="candidate-footer">
-                                    <div className="candidate-actions">
-                                        <button className="action-button primary">Contact opnemen</button>
-                                        <button className="action-button secondary">
-                                            <FaRegStar />
-                                        </button>
-                                    </div>
-                                    <span className="last-active">Laatst actief: {candidate.lastActive}</span>
+                            <div className="skills-section">
+                                {candidate.skills.map((skill, i) => (
+                                    <span key={i} className="skill-tag">{skill}</span>
+                                ))}
+                            </div>
+
+                            <div className="candidate-footer">
+                                <div className="candidate-actions">
+                                    <button className="action-button primary">Contact opnemen</button>
+                                    <button className="action-button secondary">
+                                        <FaRegStar />
+                                    </button>
                                 </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                )}
-            </div>
+                                <span className="last-active">Laatst actief: {candidate.lastActive}</span>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
 
-export default SearchCandidates; 
+export default MatchingDashboard; 

@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import Register from './pages/Register';
 // Post-signup pages
 import Dashboard from './pages/Dashboard';
+
 import VacancyDashboard from './components/dashboard/create-vacancy/VacancyDashboard';
 import Vacatures from './pages/Vacatures';
 import VacatureGenerator from './pages/VacatureGenerator';
@@ -16,8 +17,11 @@ import NewMeeting from './components/dashboard/gesprek-opnemen/NewMeeting';
 import ImportRecordings from './components/dashboard/gesprek-opnemen/ImportRecordings';
 import CreateVacancy from './components/dashboard/create-vacancy/CreateVacancy';
 import VacancyPreview from './components/dashboard/create-vacancy/VacancyPreview';
+
+import DashboardCandidates from './components/dashboard/search-candidates/DashboardCandidates';
+import MatchingDashboard from './components/dashboard/search-candidates/MatchingDashboard';
+
 import MatchAnalysis from './components/dashboard/match-analysis/MatchAnalysis';
-import SearchCandidates from './components/dashboard/search-candidates/SearchCandidates';
 import Improvements from './components/dashboard/improvements/Improvements';
 
 // Protected Route component
@@ -49,8 +53,9 @@ function App() {
                 <Route path="/import-recording" element={<ImportRecordings />} />
                 <Route path="/create-vacancy" element={<CreateVacancy />} />
                 <Route path="/vacancy-preview" element={<VacancyPreview />} />
+                <Route path="/dashboard-candidates" element={<DashboardCandidates />} />
+                <Route path="/matching-dashboard" element={<MatchingDashboard />} />
                 <Route path="/match-analysis" element={<MatchAnalysis />} />
-                <Route path="/search-candidates" element={<SearchCandidates />} />
                 <Route path="/improvements" element={<Improvements />} />
                 {/* <Route 
                     path="/dashboard" 

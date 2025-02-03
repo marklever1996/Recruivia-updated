@@ -27,7 +27,7 @@ const QuickActions = () => {
             title: "Kandidaten zoeken",
             description: "Database doorzoeken",
             color: "#F59E0B",
-            path: "/search-candidates"
+            path: "/dashboard-candidates"
         },
         {
             icon: <FaUserCheck />,
