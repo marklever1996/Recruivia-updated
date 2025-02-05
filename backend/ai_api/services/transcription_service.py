@@ -4,6 +4,9 @@ from pydub import AudioSegment
 import tempfile
 from pyannote.audio import Pipeline
 import whisper
+from dotenv import load_dotenv
+
+load_dotenv()
 
 transcription_bp = Blueprint('transcription', __name__)
 
@@ -11,8 +14,10 @@ transcription_bp = Blueprint('transcription', __name__)
 model = whisper.load_model("base")
 
 # Initialiseer de pyannote diarization pipeline
-# Vervang "YOUR_HF_TOKEN" door je eigen Hugging Face API-token
-diarization_pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization", use_auth_token="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")
+diarization_pipeline = Pipeline.from_pretrained(
+    "pyannote/speaker-diarization", 
+    use_auth_token=os.getenv('HUGGING_FACE_TOKEN')
+)
 
 
 def convert_to_wav(file_path):
