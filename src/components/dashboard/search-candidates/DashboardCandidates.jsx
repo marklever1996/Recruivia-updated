@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import SearchBar from './components/SearchBar';
-import NotificationPanel from './components/NotificationPanel';
+import AIChatbot from './components/AIChatbot';
 import MatchingDashboard from './MatchingDashboard';
+import CandidatesOverview from './CandidatesOverview';
+
 import './DashboardCandidates.css';
 
 const DashboardCandidates = () => {
@@ -17,15 +19,15 @@ const DashboardCandidates = () => {
                     <SearchBar />
                     
                     {/* Main Content Area */}
-                    {activeTab === 'candidates' && <div>Kandidaten overzicht komt hier</div>}
+                    {activeTab === 'candidates' && <CandidatesOverview />}
                     {activeTab === 'vacancies' && <div>Vacature overzicht komt hier</div>}
                     {activeTab === 'matching' && <MatchingDashboard />}
                     {activeTab === 'analytics' && <div>Analytics dashboard komt hier</div>}
 
+
                 </main>
 
-
-                <NotificationPanel />
+                <AIChatbot />
             </div>
         </div>
     );

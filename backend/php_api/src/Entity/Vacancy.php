@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\VacancyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+// Hier wordt de Vacancy entity gedefinieerd. 
+// Dit is een eenvoudige entity die gebruikt wordt om vacatures te representeren.
+
 #[ORM\Entity(repositoryClass: VacancyRepository::class)]
 class Vacancy
 {

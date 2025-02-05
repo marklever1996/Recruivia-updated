@@ -1,89 +1,171 @@
 .vacancy-preview-page {
     min-height: 100vh;
-    background: #f9fafb;
-    padding: 2rem;
+    background-color: #f0f2f5;
+    padding-top: 64px;
 }
 
-.preview-container {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.preview-header {
+.preview-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-}
-
-.back-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.back-button:hover {
-    background: #f3f4f6;
-}
-
-.preview-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-.action-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: #4F46E5;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.action-button:hover {
-    background: #4338CA;
-}
-
-.action-button.success {
-    background: #10B981;
-}
-
-.preview-content {
-    background: white;
-    padding: 3rem;
-    border-radius: 16px;
+    padding: 0 24px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.preview-toolbar.hidden {
+    transform: translateY(-100%);
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.document-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.document-title h1 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.save-status {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    color: #4b5563;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.toolbar-button:hover {
+    background: #f3f4f6;
+    color: #1a1a1a;
+}
+
+.toolbar-button.success {
+    color: #059669;
+    background: #ecfdf5;
+}
+
+.toolbar-button svg {
+    font-size: 1rem;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: #e5e7eb;
+    margin: 0 8px;
+}
+
+.document-container {
+    max-width: 210mm;
+    margin: 24px auto;
+    padding: 0 24px;
+}
+
+.document-page {
+    background: white;
+    padding: 50.8mm 25.4mm; /* A4 margins */
+    min-height: 297mm;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+}
+
+.document-content {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #1a1a1a;
+}
+
+.document-content h1 {
+    font-size: 24pt;
+    color: #2563eb;
+    margin-bottom: 16pt;
+}
+
+.document-content h2 {
+    font-size: 14pt;
+    color: #1a1a1a;
+    margin-top: 24pt;
+    margin-bottom: 12pt;
+}
+
+.document-content p {
+    margin-bottom: 12pt;
+}
+
+.document-content ul {
+    margin-bottom: 12pt;
+    padding-left: 24pt;
+}
+
+.document-content li {
+    margin-bottom: 6pt;
+}
+
+@media print {
+    .preview-toolbar {
+        display: none;
+    }
+
+    .vacancy-preview-page {
+        padding: 0;
+        background: white;
+    }
+
+    .document-container {
+        margin: 0;
+        padding: 0;
+    }
+
+    .document-page {
+        box-shadow: none;
+        min-height: auto;
+    }
 }
 
 @media (max-width: 768px) {
-    .vacancy-preview-page {
-        padding: 1rem;
+    .toolbar-button span {
+        display: none;
     }
-    
-    .preview-header {
-        flex-direction: column;
-        gap: 1rem;
+
+    .document-container {
+        padding: 0 12px;
     }
-    
-    .preview-actions {
-        width: 100%;
-    }
-    
-    .action-button {
-        flex: 1;
-    }
-    
-    .preview-content {
-        padding: 1.5rem;
+
+    .document-page {
+        padding: 24px;
     }
 } 

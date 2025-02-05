@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+// API route voor de vacatures. Dit is de route die gebruikt wordt om de vacatures op te halen.
+// Alle vacatures worden opgehaald en geretourneerd als JSON.
 #[Route('/api', name: 'api_')]
 class VacancyController extends AbstractController
 {
@@ -32,9 +34,16 @@ class VacancyController extends AbstractController
             ];
         }
 
-        return $this->json($data);
+        $response = $this->json($data);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        return $response;
     }
 
+    // API route voor het aanmaken van een vacature. 
+    // Deze route wordt gebruikt om een nieuwe vacature toe te voegen aan de database.
+    // Dus als user een vacature aanmaakt, 
+    // wordt deze route gebruikt om de vacature toe te voegen aan de database.
     #[Route('/vacancies', name: 'vacancy_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
@@ -64,6 +73,9 @@ class VacancyController extends AbstractController
         ], Response::HTTP_CREATED);
     }
 
+    // API route voor het tonen van een specifieke vacature.
+    // Deze route wordt gebruikt om een specifieke vacature op te halen uit de database.
+    // Deze route wordt gebruikt om de vacature te bekijken in de preview pagina.
     #[Route('/vacancies/{id}', name: 'vacancy_show', methods: ['GET'])]
     public function show(Vacancy $vacancy): JsonResponse
     {

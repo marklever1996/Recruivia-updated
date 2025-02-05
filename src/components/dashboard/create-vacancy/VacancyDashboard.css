@@ -211,4 +211,38 @@
     padding: 1rem 2rem;
     border-radius: 12px;
     border: 1px solid #fed7d7;
+}
+
+.new-vacancy-card.solo {
+    max-width: 400px;
+    margin: 40px auto;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.new-vacancy-card.solo .new-vacancy-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.new-vacancy-card.solo .plus-icon {
+    font-size: 2rem;
+    color: #2563eb;
+}
+
+.new-vacancy-card.solo p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.new-vacancy-card.solo .helper-text {
+    font-size: 0.95rem;
+    color: #64748b;
 } 

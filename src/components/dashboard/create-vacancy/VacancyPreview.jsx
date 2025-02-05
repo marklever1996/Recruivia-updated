@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaArrowLeft, FaCopy, FaDownload } from 'react-icons/fa';
+import { FaArrowLeft, FaCopy, FaDownload, FaEllipsisH, FaPrint, FaShare, FaSave } from 'react-icons/fa';
 import './VacancyPreview.css';
 
 const VacancyPreview = () => {
     const navigate = useNavigate();
     const [vacancyHtml, setVacancyHtml] = useState('');
     const [copySuccess, setCopySuccess] = useState(false);
+    const [showToolbar, setShowToolbar] = useState(true);
 
     useEffect(() => {
         const html = localStorage.getItem('generatedVacancy');
@@ -16,6 +17,18 @@ const VacancyPreview = () => {
             return;
         }
         setVacancyHtml(html);
+
+        // Hide toolbar on scroll
+        const handleScroll = () => {
+            if (window.scrollY > 100) {
+                setShowToolbar(false);
+            } else {
+                setShowToolbar(true);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, [navigate]);
 
     const handleCopy = () => {
@@ -36,44 +49,83 @@ const VacancyPreview = () => {
         document.body.removeChild(element);
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="vacancy-preview-page">
-            <div className="preview-container">
-                <motion.div 
-                    className="preview-header"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                >
+            <motion.div 
+                className={`preview-toolbar ${showToolbar ? 'visible' : 'hidden'}`}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            >
+                <div className="toolbar-left">
                     <button 
-                        className="back-button"
+                        className="toolbar-button"
                         onClick={() => navigate('/create-vacancy')}
                     >
-                        <FaArrowLeft /> Terug
+                        <FaArrowLeft /> <span>Terug</span>
                     </button>
-                    <div className="preview-actions">
-                        <button 
-                            className={`action-button ${copySuccess ? 'success' : ''}`}
-                            onClick={handleCopy}
-                        >
-                            <FaCopy /> {copySuccess ? 'Gekopieerd!' : 'Kopieer tekst'}
-                        </button>
-                        <button 
-                            className="action-button"
-                            onClick={handleDownload}
-                        >
-                            <FaDownload /> Download HTML
-                        </button>
+                    <div className="document-title">
+                        <h1>Vacaturetekst</h1>
+                        <span className="save-status">Automatisch opgeslagen</span>
                     </div>
-                </motion.div>
+                </div>
 
-                <motion.div 
-                    className="preview-content"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    dangerouslySetInnerHTML={{ __html: vacancyHtml }}
-                />
-            </div>
+                <div className="toolbar-actions">
+                    <button 
+                        className={`toolbar-button ${copySuccess ? 'success' : ''}`}
+                        onClick={handleCopy}
+                        title="Kopieer naar klembord"
+                    >
+                        <FaCopy />
+                        <span>{copySuccess ? 'Gekopieerd!' : 'Kopiëren'}</span>
+                    </button>
+                    <button 
+                        className="toolbar-button"
+                        onClick={handleDownload}
+                        title="Download als HTML"
+                    >
+                        <FaDownload />
+                        <span>Downloaden</span>
+                    </button>
+                    <button 
+                        className="toolbar-button"
+                        onClick={handlePrint}
+                        title="Print document"
+                    >
+                        <FaPrint />
+                        <span>Afdrukken</span>
+                    </button>
+                    <button 
+                        className="toolbar-button"
+                        title="Delen"
+                    >
+                        <FaShare />
+                        <span>Delen</span>
+                    </button>
+                    <div className="toolbar-divider"></div>
+                    <button className="toolbar-button">
+                        <FaEllipsisH />
+                    </button>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                className="document-container"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+            >
+                <div className="document-page">
+                    <div 
+                        className="document-content"
+                        dangerouslySetInnerHTML={{ __html: vacancyHtml }}
+                    />
+                </div>
+            </motion.div>
         </div>
     );
 };

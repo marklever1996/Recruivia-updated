@@ -21,11 +21,10 @@ const VacancyDashboard = () => {
                 throw new Error('Er ging iets mis bij het ophalen van de vacatures');
             }
             const data = await response.json();
-            console.log('Ontvangen vacatures:', data);
-            setVacancies(data);
+            setVacancies(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error('Error:', err);
-            setError(err.message);
+            setVacancies([]); // Zet vacatures naar lege array bij error
         } finally {
             setIsLoading(false);
         }
@@ -48,61 +47,70 @@ const VacancyDashboard = () => {
         );
     }
 
-    if (error) {
-        return (
-            <div className="vacancy-dashboard error">
-                <div className="error-message">{error}</div>
-            </div>
-        );
-    }
-
     return (
         <div className="vacancy-dashboard">
             <div className="dashboard-content">
                 <div className="vacancies-grid">
-                    <motion.div
-                        className="vacancy-card new-vacancy-card"
-                        onClick={() => navigate('/create-vacancy')}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                        <div className="new-vacancy-content">
-                            <FaPlus className="plus-icon" />
-                            <p>Nieuwe Vacature</p>
-                        </div>
-                    </motion.div>
-
-                    {vacancies.map((vacancy) => {
-                        console.log('Vacancy data:', vacancy);
-                        return (
+                    {vacancies.length === 0 ? (
+                        // Alleen de nieuwe vacature kaart als er geen vacatures zijn
+                        <motion.div
+                            className="vacancy-card new-vacancy-card solo"
+                            onClick={() => navigate('/create-vacancy')}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <div className="new-vacancy-content">
+                                <FaPlus className="plus-icon" />
+                                <p>Nieuwe Vacature</p>
+                                <span className="helper-text">
+                                    Start met het maken van je eerste vacature
+                                </span>
+                            </div>
+                        </motion.div>
+                    ) : (
+                        // Als er wel vacatures zijn, toon dan alles
+                        <>
                             <motion.div
-                                key={vacancy.id}
-                                className="vacancy-card"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                className="vacancy-card new-vacancy-card"
+                                onClick={() => navigate('/create-vacancy')}
                                 whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
-                                <div className="vacancy-header">
-                                    <h2>{vacancy.title}</h2>
-                                    <div className="company">
-                                        <FaBuilding />
-                                        <span>{vacancy.company}</span>
-                                    </div>
-                                    <div className="extra-info">
-                                        {vacancy.location}
-                                    </div>
+                                <div className="new-vacancy-content">
+                                    <FaPlus className="plus-icon" />
+                                    <p>Nieuwe Vacature</p>
                                 </div>
-
-
-                                <button 
-                                    onClick={() => navigate(`/vacancy/${vacancy.id}`)}
-                                    className="view-button"
-                                >
-                                    Bekijk Details
-                                </button>
                             </motion.div>
-                        );
-                    })}
+
+                            {vacancies.map((vacancy) => (
+                                <motion.div
+                                    key={vacancy.id}
+                                    className="vacancy-card"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    whileHover={{ scale: 1.02 }}
+                                >
+                                    <div className="vacancy-header">
+                                        <h2>{vacancy.title}</h2>
+                                        <div className="company">
+                                            <FaBuilding />
+                                            <span>{vacancy.company}</span>
+                                        </div>
+                                        <div className="extra-info">
+                                            {vacancy.location}
+                                        </div>
+                                    </div>
+
+                                    <button 
+                                        onClick={() => navigate(`/vacancy/${vacancy.id}`)}
+                                        className="view-button"
+                                    >
+                                        Bekijk Details
+                                    </button>
+                                </motion.div>
+                            ))}
+                        </>
+                    )}
                 </div>
             </div>
         </div>

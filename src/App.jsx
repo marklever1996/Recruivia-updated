@@ -20,6 +20,7 @@ import VacancyPreview from './components/dashboard/create-vacancy/VacancyPreview
 
 import DashboardCandidates from './components/dashboard/search-candidates/DashboardCandidates';
 import MatchingDashboard from './components/dashboard/search-candidates/MatchingDashboard';
+import CandidatesOverview from './components/dashboard/search-candidates/CandidatesOverview';
 
 import MatchAnalysis from './components/dashboard/match-analysis/MatchAnalysis';
 import Improvements from './components/dashboard/improvements/Improvements';
@@ -40,11 +41,13 @@ function App() {
         <Router>
             <Header />
             <Routes>
+                {/* Pre-signup pages */}
                 <Route path="/" element={<Landingpage />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<Register />} />
+                {/* Post-signup pages */}
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/vacancy-dashboard" element={<VacancyDashboard />} />
                 <Route path="/vacatures" element={<Vacatures />} />
@@ -54,6 +57,7 @@ function App() {
                 <Route path="/create-vacancy" element={<CreateVacancy />} />
                 <Route path="/vacancy-preview" element={<VacancyPreview />} />
                 <Route path="/dashboard-candidates" element={<DashboardCandidates />} />
+            
                 <Route path="/matching-dashboard" element={<MatchingDashboard />} />
                 <Route path="/match-analysis" element={<MatchAnalysis />} />
                 <Route path="/improvements" element={<Improvements />} />

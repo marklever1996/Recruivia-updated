@@ -1,0 +1,231 @@
+.candidates-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.overview-header {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filters-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    padding: 10px 20px;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.filter-button.active {
+    background: #2563eb;
+    color: white;
+}
+
+.candidates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.candidate-item {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.candidate-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.candidate-main-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.candidate-photo {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 2rem;
+}
+
+.candidate-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.candidate-details h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+}
+
+.candidate-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.meta-item svg {
+    font-size: 0.9em;
+}
+
+.skills-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.skill-tag {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.candidate-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-badge.beschikbaar {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.status-badge.open-voor-gesprek {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.action-button.contact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-button.contact:hover {
+    background: #1d4ed8;
+}
+
+.last-active {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+    .candidate-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .candidate-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 640px) {
+    .candidate-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .candidate-actions {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .last-active {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-candidate-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-candidate-button:hover {
+    background: #1d4ed8;
+}
+
+.add-candidate-button svg {
+    font-size: 1.1rem;
+} 

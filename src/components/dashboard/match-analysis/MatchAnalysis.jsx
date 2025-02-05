@@ -16,7 +16,7 @@ const MatchAnalysis = () => {
     useEffect(() => {
         const fetchVacancies = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/vacancies');
+                const response = await fetch('http://localhost:8000/api/vacancies');
                 if (!response.ok) {
                     throw new Error('Failed to fetch vacancies');
                 }
@@ -56,7 +56,7 @@ const MatchAnalysis = () => {
             formData.append('cv', selectedFile);
             formData.append('vacancy_id', selectedVacancy);
 
-            const response = await fetch('http://localhost:5000/api/analyze-match', {
+            const response = await fetch('http://127.0.0.1:5000/api/analyze-match', {
                 method: 'POST',
                 body: formData
             });

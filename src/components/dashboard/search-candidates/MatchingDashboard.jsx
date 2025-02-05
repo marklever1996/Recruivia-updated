@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSearch, FaStar, FaRegStar, FaFilter, FaUserCircle, FaChevronDown, FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -10,40 +10,64 @@ const MatchingDashboard = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [sortBy, setSortBy] = useState('match');
+    const [vacancies, setVacancies] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Voorbeeld vacatures (later te vervangen door API call)
-    const vacatures = [
-        {
-            id: 1,
-            title: 'Senior React Developer',
-            department: 'Engineering',
-            location: 'Amsterdam',
-            requirements: [
-                'React', 'TypeScript', 'Node.js',
-                'AWS', 'CI/CD', 'Agile'
-            ]
-        },
-        {
-            id: 2,
-            title: 'Frontend Developer',
-            department: 'Product',
-            location: 'Utrecht',
-            requirements: [
-                'React', 'Vue.js', 'JavaScript',
-                'CSS3', 'UI/UX', 'Responsive Design'
-            ]
-        },
-        {
-            id: 3,
-            title: 'Full Stack Developer',
-            department: 'Engineering',
-            location: 'Rotterdam',
-            requirements: [
-                'React', 'Node.js', 'MongoDB',
-                'Docker', 'Microservices', 'AWS'
-            ]
+    useEffect(() => {
+        fetchVacancies();
+    }, []);
+
+    const fetchVacancies = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/vacancies');
+            if (!response.ok) {
+                throw new Error('Er ging iets mis bij het ophalen van de vacatures');
+            }
+            const data = await response.json();
+            
+            // Transform de API data naar het gewenste formaat
+            const transformedVacancies = data.map(vacancy => ({
+                id: vacancy.id,
+                title: vacancy.title,
+                department: 'Engineering', // Dit zou je kunnen toevoegen aan je Vacancy entity
+                location: vacancy.location,
+                requirements: vacancy.description
+                    ? extractRequirements(vacancy.description)
+                    : []
+            }));
+            
+            setVacancies(transformedVacancies);
+        } catch (err) {
+            console.error('Error:', err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
         }
-    ];
+    };
+
+    // Helper functie om requirements te extraheren uit de beschrijving
+    const extractRequirements = (description) => {
+        // Je kunt hier logica toevoegen om requirements te extraheren
+        // Voor nu returnen we een lege array
+        return [];
+    };
+
+    if (isLoading) {
+        return (
+            <div className="matching-dashboard loading">
+                <div className="loader">Laden...</div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="matching-dashboard error">
+                <div className="error-message">{error}</div>
+            </div>
+        );
+    }
 
     // Voorbeeld kandidaten data (later te vervangen door API calls)
     const candidates = [
@@ -154,7 +178,7 @@ const MatchingDashboard = () => {
                             className="vacancy-select"
                         >
                             <option value="">Selecteer een vacature</option>
-                            {vacatures.map(vacature => (
+                            {vacancies.map(vacature => (
                                 <option key={vacature.id} value={vacature.id}>
                                     {vacature.title} - {vacature.department}
                                 </option>
