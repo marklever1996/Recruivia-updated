@@ -1,11 +1,12 @@
 from flask import Blueprint, request, jsonify
 import os
-from pydub import AudioSegment
 import tempfile
-from pyannote.audio import Pipeline
-import whisper
 from dotenv import load_dotenv
 from openai import OpenAI
+
+from pyannote.audio import Pipeline
+import whisper
+from pydub import AudioSegment
 
 load_dotenv()
 
