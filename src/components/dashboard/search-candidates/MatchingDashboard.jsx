@@ -13,10 +13,15 @@ const MatchingDashboard = () => {
     const [vacancies, setVacancies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [candidates, setCandidates] = useState([]);
 
     useEffect(() => {
         fetchVacancies();
     }, []);
+
+    useEffect(() => {
+        fetchCandidates();
+    }, [selectedVacancy]);
 
     const fetchVacancies = async () => {
         try {
@@ -38,6 +43,90 @@ const MatchingDashboard = () => {
             }));
             
             setVacancies(transformedVacancies);
+        } catch (err) {
+            console.error('Error:', err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchCandidates = async () => {
+        try {
+            setIsLoading(true);
+            
+            // Haal eerst alle kandidaten op
+            const candidatesResponse = await fetch('http://localhost:8000/api/candidates');
+            if (!candidatesResponse.ok) throw new Error('Kon kandidaten niet ophalen');
+            const candidatesData = await candidatesResponse.json();
+
+            if (!selectedVacancy) {
+                // Als geen vacature is geselecteerd, toon alle kandidaten zonder matching
+                const formattedCandidates = candidatesData.map(candidate => ({
+                    id: candidate.id,
+                    name: candidate.name,
+                    title: candidate.experience?.[0]?.position || 'Geen titel',
+                    location: candidate.location,
+                    skills: candidate.skills || [],
+                    experience: `${candidate.experience?.length || 0} jaar ervaring`,
+                    status: 'Beschikbaar',
+                    matchScore: null,
+                    matchingPoints: []
+                }));
+                setCandidates(formattedCandidates);
+                return;
+            }
+
+            // Haal eerst de vacature details op
+            const vacancyResponse = await fetch(`http://localhost:8000/api/vacancies/${selectedVacancy}`);
+            if (!vacancyResponse.ok) throw new Error('Kon vacature niet ophalen');
+            const vacancyData = await vacancyResponse.json();
+
+            // Als een vacature is geselecteerd, gebruik AI voor matching
+            const matchResponse = await fetch('http://localhost:5000/api/match-candidates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    vacancy: vacancyData,
+                    candidates: candidatesData
+                })
+            });
+
+            if (!matchResponse.ok) throw new Error('Kon matching niet uitvoeren');
+            const matchData = await matchResponse.json();
+
+            // Controleer of matchData de juiste structuur heeft
+            if (!matchData || !Array.isArray(matchData.matches)) {
+                console.error('Unexpected match data structure:', matchData);
+                throw new Error('Ongeldig formaat van matching data');
+            }
+
+            // Combineer kandidaat data met match scores
+            const matchedCandidates = candidatesData.map(candidate => {
+                const match = matchData.matches.find(m => m.candidate_id === candidate.id) || {
+                    match_score: 0,
+                    matching_points: []
+                };
+                
+                return {
+                    id: candidate.id,
+                    name: candidate.name,
+                    title: candidate.experience?.[0]?.position || 'Geen titel',
+                    location: candidate.location,
+                    skills: candidate.skills || [],
+                    experience: `${candidate.experience?.length || 0} jaar ervaring`,
+                    status: 'Beschikbaar',
+                    matchScore: match.match_score,
+                    matchingPoints: match.matching_points
+                };
+            });
+
+            // Sorteer op match score als een vacature is geselecteerd
+            matchedCandidates.sort((a, b) => b.matchScore - a.matchScore);
+            setCandidates(matchedCandidates);
+
         } catch (err) {
             console.error('Error:', err);
             setError(err.message);
@@ -68,79 +157,6 @@ const MatchingDashboard = () => {
             </div>
         );
     }
-
-    // Voorbeeld kandidaten data (later te vervangen door API calls)
-    const candidates = [
-        {
-            id: 1,
-            name: "Sarah Johnson",
-            title: "Senior React Developer",
-            location: "Amsterdam",
-            matchScore: 95,
-            skills: ["React", "TypeScript", "Node.js", "AWS"],
-            experience: "8 jaar",
-            matchingPoints: [
-                "95% match met technische vaardigheden",
-                "Vergelijkbare rol bij soortgelijk bedrijf",
-                "8+ jaar relevante ervaring in React development"
-            ],
-            status: "Open voor nieuwe kansen",
-            lastActive: "2 dagen geleden",
-            photo: null
-        },
-        {
-            id: 2,
-            name: "Michael Chen",
-            title: "Frontend Developer",
-            location: "Utrecht",
-            matchScore: 87,
-            skills: ["React", "TypeScript", "Next.js", "TailwindCSS"],
-            experience: "5 jaar",
-            matchingPoints: [
-                "87% match met vereiste technische stack",
-                "Ervaring met moderne React frameworks",
-                "Actieve bijdragen aan open source projecten"
-            ],
-            status: "Actief zoekend",
-            lastActive: "Vandaag",
-            highlighted: ["Sterk in moderne frontend frameworks", "Open source contributor"],
-            photo: null
-        },
-        {
-            id: 3,
-            name: "Emma van der Berg",
-            title: "Full Stack Developer",
-            location: "Amsterdam",
-            matchScore: 82,
-            skills: ["React", "Node.js", "MongoDB", "Docker"],
-            experience: "6 jaar",
-            matchingPoints: [
-                "Sterke backend ervaring met Node.js",
-                "Ervaring met microservices architectuur",
-                "Leidinggevende rol in agile teams"
-            ],
-            status: "Actief zoekend",
-            lastActive: "1 week geleden",
-            photo: null
-        },
-        {
-            id: 4,
-            name: "David Wilson",
-            title: "React Native Developer",
-            location: "Rotterdam",
-            matchScore: 78,
-            skills: ["React", "React Native", "TypeScript", "Redux"],
-            experience: "4 jaar",
-            matchingPoints: [
-                "Uitgebreide ervaring met React ecosysteem",
-                "Sterke focus op mobile development",
-                "Bekend met moderne state management"
-            ],
-            status: "Actief zoekend",
-            lastActive: "3 dagen geleden",
-            photo: null
-        }
-    ];
 
     const filters = [
         { id: 'experience', label: 'Ervaring', options: ['3-5 jaar', '5-8 jaar', '8+ jaar'] },
@@ -196,25 +212,25 @@ const MatchingDashboard = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        <button className="filter-button">
-                            <FaFilter />
+                            <button className="filter-button">
+                                <FaFilter />
                             <span>Filters</span>
-                            <FaChevronDown className="chevron-icon" />
-                        </button>
-                        <select 
-                            className="sort-select"
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
-                        >
-                            <option value="match">Match Score ↓</option>
-                            <option value="recent">Recent Actief</option>
-                            <option value="experience">Ervaring</option>
-                        </select>
+                                <FaChevronDown className="chevron-icon" />
+                            </button>
+                            <select 
+                                className="sort-select"
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                            >
+                                <option value="match">Match Score ↓</option>
+                                <option value="recent">Recent Actief</option>
+                                <option value="experience">Ervaring</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
             </div>
 
-            {!selectedVacancy ? (
+                {!selectedVacancy ? (
                 <motion.div 
                     className="no-vacancy-selected"
                     initial={{ opacity: 0, y: 20 }}
@@ -235,62 +251,61 @@ const MatchingDashboard = () => {
                         </div>
                     </div>
                 </motion.div>
-            ) : (
-                <div className="candidates-grid">
-                    {candidates.map((candidate, index) => (
-                        <motion.div 
-                            key={candidate.id}
-                            className="candidate-card"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                        >
-                            <div className="candidate-header">
-                                <div className="candidate-info">
-                                    {candidate.photo ? (
-                                        <img src={candidate.photo} alt={candidate.name} className="candidate-photo" />
-                                    ) : (
-                                        <FaUserCircle className="candidate-photo-placeholder" />
-                                    )}
+                ) : (
+                    <div className="candidates-grid">
+                        {candidates.map((candidate, index) => (
+                            <motion.div 
+                                key={candidate.id}
+                                className="candidate-card"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                            >
+                                <div className="candidate-header">
+                                    <div className="candidate-info">
+                                        {candidate.photo ? (
+                                            <img src={candidate.photo} alt={candidate.name} className="candidate-photo" />
+                                        ) : (
+                                            <FaUserCircle className="candidate-photo-placeholder" />
+                                        )}
                                     <div className="candidate-details">
-                                        <h3>{candidate.name}</h3>
+                                            <h3>{candidate.name}</h3>
                                         <p className="candidate-title">{candidate.title}</p>
                                         <p className="candidate-location">{candidate.location}</p>
+                                        </div>
+                                    </div>
+                                    <div className="match-score">
+                                    {candidate.matchScore}%
                                     </div>
                                 </div>
-                                <div className="match-score">
-                                    {candidate.matchScore}%
-                                </div>
-                            </div>
 
-                            <div className="matching-points">
+                                <div className="matching-points">
                                 <h4>Match details</h4>
-                                <ul>
-                                    {candidate.matchingPoints.map((point, i) => (
-                                        <li key={i}>{point}</li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className="skills-section">
-                                {candidate.skills.map((skill, i) => (
-                                    <span key={i} className="skill-tag">{skill}</span>
-                                ))}
-                            </div>
-
-                            <div className="candidate-footer">
-                                <div className="candidate-actions">
-                                    <button className="action-button primary">Contact opnemen</button>
-                                    <button className="action-button secondary">
-                                        <FaRegStar />
-                                    </button>
+                                    <ul>
+                                        {candidate.matchingPoints.map((point, i) => (
+                                            <li key={i}>{point}</li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <span className="last-active">Laatst actief: {candidate.lastActive}</span>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            )}
+
+                                <div className="skills-section">
+                                    {candidate.skills.map((skill, i) => (
+                                        <span key={i} className="skill-tag">{skill}</span>
+                                    ))}
+                                </div>
+
+                                <div className="candidate-footer">
+                                    <div className="candidate-actions">
+                                        <button className="action-button primary">Contact opnemen</button>
+                                        <button className="action-button secondary">
+                                            <FaRegStar />
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
         </div>
     );
 };

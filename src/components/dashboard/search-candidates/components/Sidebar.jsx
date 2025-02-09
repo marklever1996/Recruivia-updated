@@ -13,12 +13,6 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     <FaUsers /> Kandidaten
                 </li>
                 <li 
-                    className={activeTab === 'vacancies' ? 'active' : ''}
-                    onClick={() => setActiveTab('vacancies')}
-                >
-                    <FaBriefcase /> Vacatures of persona?
-                </li>
-                <li 
                     className={activeTab === 'matching' ? 'active' : ''}
                     onClick={() => setActiveTab('matching')}
                 >

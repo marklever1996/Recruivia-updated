@@ -10,6 +10,7 @@ import {
     FaInbox,
     FaCheck
 } from 'react-icons/fa';
+import './QuickActions.css';
 
 const QuickActions = () => {
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ const QuickActions = () => {
             title: "Gesprek opnemen",
             description: "Start opname",
             color: "#4F46E5",
-            path: "/new-meeting"
+            path: "/meeting-overview"
         },
         {
             icon: <FaInbox />,
@@ -65,7 +66,7 @@ const QuickActions = () => {
 
     return (
         <div className="quick-actions">
-            <h2>Quick Actions</h2>
+            {/* <h2>Quick Actions</h2> */}
             <div className="actions-grid">
                 {actions.map((action, index) => (
                     <motion.div

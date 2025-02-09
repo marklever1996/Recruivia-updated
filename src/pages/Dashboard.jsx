@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import WelcomeSection from '../components/dashboard/WelcomeSection';
 import QuickActions from '../components/dashboard/QuickActions';
-import RecentActivity from '../components/dashboard/RecentActivity';
+import AIChatbot from '../components/dashboard/AIChatbot';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -15,7 +15,7 @@ const Dashboard = () => {
                     <QuickActions />
                 </div>
                 <div className="dashboard-sidebar">
-                    <RecentActivity />
+                    <AIChatbot />
                 </div>
             </div>
         </div>

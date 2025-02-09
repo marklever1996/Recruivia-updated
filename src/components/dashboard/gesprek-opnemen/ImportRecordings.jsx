@@ -121,10 +121,7 @@ const ImportRecordings = () => {
                     animate={{ opacity: 1, y: 0 }}
                 >
                     <h1>Importeer Opname</h1>
-                    <p className="upload-description">
-                        Sleep een audio of video bestand hierheen of klik om te uploaden
-                    </p>
-
+                    
                     <div 
                         className="dropzone"
                         onDrop={handleDrop}

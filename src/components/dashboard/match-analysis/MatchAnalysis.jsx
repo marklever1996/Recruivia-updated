@@ -16,6 +16,7 @@ const MatchAnalysis = () => {
     useEffect(() => {
         const fetchVacancies = async () => {
             try {
+                // Fetch vacancies from the backend (Symfony API)
                 const response = await fetch('http://localhost:8000/api/vacancies');
                 if (!response.ok) {
                     throw new Error('Failed to fetch vacancies');
@@ -56,6 +57,7 @@ const MatchAnalysis = () => {
             formData.append('cv', selectedFile);
             formData.append('vacancy_id', selectedVacancy);
 
+            // Analyseer match met AI API, backend/ai_api/app.py
             const response = await fetch('http://127.0.0.1:5000/api/analyze-match', {
                 method: 'POST',
                 body: formData
@@ -77,7 +79,7 @@ const MatchAnalysis = () => {
 
     return (
         <div className="match-analysis">
-            <div className="analysis-container">
+            <div className={`analysis-container ${analysisResult ? 'has-results' : ''}`}>
                 <motion.div 
                     className="analysis-form-section"
                     initial={{ opacity: 0, y: 20 }}
@@ -160,13 +162,12 @@ const MatchAnalysis = () => {
                 {analysisResult && (
                     <motion.div 
                         className="analysis-result"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
                     >
                         <h2>Analyse Resultaten</h2>
                         <div className="match-score">
                             <div className="score-circle">
-                                <FaPercentage />
                                 <span>{analysisResult.match_percentage}%</span>
                             </div>
                             <p>Match Score</p>
@@ -192,8 +193,48 @@ const MatchAnalysis = () => {
                             </ul>
 
                             <div className="recommendations">
-                                <h3>Aanbevelingen</h3>
-                                <p>{analysisResult.recommendations}</p>
+                                <h3>Recruitment Advies</h3>
+                                
+                                <div className="recommendation-section">
+                                    <h4>Algemene Analyse</h4>
+                                    <p>{analysisResult.recommendations.algemene_analyse}</p>
+                                </div>
+
+                                <div className="recommendation-section">
+                                    <h4>Vervolgstappen</h4>
+                                    <ol className="steps-list">
+                                        {analysisResult.recommendations.vervolgstappen.map((stap, index) => (
+                                            <li key={index}>{stap}</li>
+                                        ))}
+                                    </ol>
+                                </div>
+
+                                <div className="recommendation-section">
+                                    <h4>Interview Vragen</h4>
+                                    <ul className="questions-list">
+                                        {analysisResult.recommendations.interview_vragen.map((vraag, index) => (
+                                            <li key={index}>{vraag}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="recommendation-section">
+                                    <h4>Ontwikkelpunten</h4>
+                                    <ul className="points-list">
+                                        {analysisResult.recommendations.ontwikkelpunten.map((punt, index) => (
+                                            <li key={index}>{punt}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="recommendation-section">
+                                    <h4>Aandachtspunten</h4>
+                                    <ul className="points-list attention">
+                                        {analysisResult.recommendations.aandachtspunten.map((punt, index) => (
+                                            <li key={index}>{punt}</li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </motion.div>

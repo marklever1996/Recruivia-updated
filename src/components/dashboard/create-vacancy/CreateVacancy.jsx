@@ -15,11 +15,10 @@ const CreateVacancy = () => {
         soft_skills: '',
         hard_skills: '',
         organisatie_cultuur: '',
-        collegas: '',
+        team_samenstelling: '',
         geschiedenis: '',
         sector: '',
         kernactiviteit: '',
-        doelen: '',
         missie_visie_kernwaarden: '',
         maatschappelijke_bijdrage: ''
     });
@@ -117,10 +116,25 @@ const CreateVacancy = () => {
                     required: true
                 },
                 {
+                    name: "locatie",
+                    label: "Locatie",
+                    type: "text",
+                    placeholder: "Bijv: Amsterdam, Utrecht, etc.",
+                    required: true
+                },
+                {
+                    name: "uren",
+                    label: "Uren",
+                    type: "text",
+                    placeholder: "Bijv: 32 uur per week",
+                    required: true
+                },
+                {
                     name: "specifieke_taken",
                     label: "Specifieke taken",
                     type: "textarea",
                     placeholder: "Beschrijf de belangrijkste taken en verantwoordelijkheden",
+
                     required: true,
                     fullWidth: true
                 },
@@ -181,7 +195,7 @@ const CreateVacancy = () => {
                     name: "geschiedenis",
                     label: "Geschiedenis",
                     type: "textarea",
-                    placeholder: "Korte geschiedenis van de organisatie",
+                    placeholder: "Tip: dit is vaak te vinden op de website van de organisatie",
                     required: true
                 }
             ]
@@ -191,12 +205,13 @@ const CreateVacancy = () => {
             icon: <FaHandshake />,
             fields: [
                 {
-                    name: "collegas",
+                    name: "team_samenstelling",
                     label: "Team samenstelling",
                     type: "textarea",
                     placeholder: "Beschrijf het team waar de kandidaat in komt te werken",
                     required: true
                 },
+
                 {
                     name: "organisatie_cultuur",
                     label: "Organisatiecultuur",
@@ -209,27 +224,20 @@ const CreateVacancy = () => {
         {
             title: "Missie & Visie",
             icon: <FaChartLine />,
-            fields: [
+            fields: [               
                 {
-                    name: "doelen",
-                    label: "Strategische doelen",
+                    name: "maatschappelijke_bijdrage",
+                    label: "Maatschappelijke bijdrage (optioneel)",
                     type: "textarea",
-                    placeholder: "Wat wil de organisatie bereiken?",
-                    required: true
+                    placeholder: "Hoe draagt deze functie bij aan de maatschappij?",
+                    required: false
                 },
                 {
                     name: "missie_visie_kernwaarden",
-                    label: "Missie, visie en kernwaarden",
+                    label: "Missie, Visie en Kernwaarden",
                     type: "textarea",
-                    placeholder: "Waar staat de organisatie voor?",
-                    required: true
-                },
-                {
-                    name: "maatschappelijke_bijdrage",
-                    label: "Maatschappelijke bijdrage",
-                    type: "textarea",
-                    placeholder: "Hoe draagt deze functie bij aan de maatschappij?",
-                    required: true
+                    placeholder: "Wat is de missie, visie en kernwaarden van de organisatie?",
+                    required: false
                 }
             ]
         }

@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Vacancy>
  */
+// Dit is de repository voor de Vacancy entity. Hierdoor kunnen we de database interacties uitvoeren.
 class VacancyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

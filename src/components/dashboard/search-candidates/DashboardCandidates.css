@@ -1,163 +1,205 @@
 .dashboard {
     min-height: 100vh;
-    background-color: #f8fafc;
-    color: #1a1a1a;
+    background: #f9fafb;
+    padding: 6rem 2rem;
 }
 
 .dashboard-content {
     display: grid;
-    grid-template-columns: 240px 1fr 320px;
-    gap: 24px;
-    padding: 24px;
-    height: 100vh;
-    max-width: 1920px;
+    grid-template-columns: 1fr 380px;
+    gap: 2rem;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-.dashboard-sidebar {
-    background-color: white;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Welcome Section */
+.welcome-section {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.dashboard-sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.dashboard-sidebar li {
+.welcome-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1rem;
-    margin: 0.5rem 0;
-    border-radius: 6px;
-    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.welcome-header h1 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Search Section */
+.search-section {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 0.95rem;
     transition: all 0.2s ease;
+    color: #111827;
 }
 
-.dashboard-sidebar li:hover {
-    background-color: #f7fafc;
+.search-bar:hover {
+    border-color: #d1d5db;
 }
 
-.dashboard-sidebar li.active {
-    background-color: #ebf4ff;
-    color: #3182ce;
+.search-bar:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
 }
 
-.dashboard-main {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    overflow-y: auto;
-    padding-right: 12px;
-}
-
-.dashboard-main::-webkit-scrollbar {
-    width: 6px;
-}
-
-.dashboard-main::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 8px;
-}
-
-.dashboard-main::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 8px;
-}
-
+/* Stats Overview */
 .stats-overview {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .stat-card {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.25rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
 }
 
 .stat-card h3 {
-    color: #4a5568;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
+    color: #6b7280;
     margin-bottom: 0.5rem;
 }
 
 .stat-card p {
     font-size: 1.5rem;
-    font-weight: bold;
-    color: #2d3748;
+    font-weight: 600;
+    color: #111827;
 }
 
-.dashboard-notifications {
-    background-color: white;
-    border-radius: 8px;
+/* Candidates Section */
+.candidates-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.candidates-list {
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.dashboard-notifications h2 {
-    font-size: 1.2rem;
+.candidate-item {
+    padding: 1.25rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
     margin-bottom: 1rem;
-    color: #2d3748;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
-.notification-item {
-    padding: 1rem;
-    border-bottom: 1px solid #edf2f7;
+.candidate-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
+    background: white;
 }
 
-.notification-item:last-child {
-    border-bottom: none;
+.candidate-item:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 }
 
-.notification-item p {
-    margin: 0;
-    color: #4a5568;
-    font-size: 0.9rem;
+.candidate-item.new-candidate {
+    animation: highlight 2s ease-out;
 }
 
-.notification-time {
-    display: block;
-    font-size: 0.8rem;
-    color: #718096;
-    margin-top: 0.5rem;
+@keyframes highlight {
+    0% {
+        background-color: rgba(234, 88, 12, 0.1);
+        transform: scale(1.02);
+    }
+    100% {
+        background-color: #f8fafc;
+        transform: scale(1);
+    }
+}
+
+/* Custom Scrollbar */
+.dashboard-main::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dashboard-main::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 20px;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 /* Responsive Design */
-@media (max-width: 1536px) {
-    .dashboard-content {
-        grid-template-columns: 220px 1fr 300px;
-        gap: 20px;
-        padding: 20px;
-    }
-}
-
-@media (max-width: 1280px) {
-    .dashboard-content {
-        grid-template-columns: 200px 1fr;
-    }
-    
-    .dashboard-notifications {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .dashboard-content {
         grid-template-columns: 1fr;
-        padding: 16px;
-    }
-    
-    .dashboard-sidebar {
-        display: none;
     }
     
     .stats-overview {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard {
+        padding: 6rem 1rem 1rem;
+    }
+    
+    .stats-overview {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-section,
+    .candidates-section {
+        padding: 1.5rem;
     }
 } 

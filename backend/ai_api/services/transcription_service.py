@@ -5,6 +5,7 @@ import tempfile
 from pyannote.audio import Pipeline
 import whisper
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
@@ -19,6 +20,7 @@ diarization_pipeline = Pipeline.from_pretrained(
     use_auth_token=os.getenv('HUGGING_FACE_TOKEN')
 )
 
+client = OpenAI()  # Dit initialiseert de client met OPENAI_API_KEY uit .env
 
 def convert_to_wav(file_path):
     """Converteer geüploade audio/video naar WAV-formaat"""
@@ -93,10 +95,23 @@ def transcribe_audio():
         os.remove(temp_path)
         os.remove(wav_path)
 
+        # Vervang de oude ChatCompletion.create met:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Je bent een AI recruitment assistent."},
+                {"role": "user", "content": full_transcript}
+            ]
+        )
+
+        # Access het antwoord via:
+        answer = response.choices[0].message.content
+
         return jsonify({
             'conversation_type': conversation_type,
             'full_transcript': full_transcript,
-            'segments': transcript_segments
+            'segments': transcript_segments,
+            'answer': answer
         })
 
     except Exception as e:

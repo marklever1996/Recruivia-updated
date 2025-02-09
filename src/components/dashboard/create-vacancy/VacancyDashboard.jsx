@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaPlus, FaBuilding, FaCalendarAlt, FaEuroSign, FaMapMarkerAlt, FaLocationArrow } from 'react-icons/fa';
+import { FaPlus, FaBuilding, FaMapMarkerAlt, FaCalendar } from 'react-icons/fa';
 import './VacancyDashboard.css';
 
 const VacancyDashboard = () => {
     const [vacancies, setVacancies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,101 +16,87 @@ const VacancyDashboard = () => {
     const fetchVacancies = async () => {
         try {
             const response = await fetch('http://localhost:8000/api/vacancies');
-            if (!response.ok) {
-                throw new Error('Er ging iets mis bij het ophalen van de vacatures');
-            }
+            if (!response.ok) throw new Error('Er ging iets mis bij het ophalen van de vacatures');
             const data = await response.json();
             setVacancies(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error('Error:', err);
-            setVacancies([]); // Zet vacatures naar lege array bij error
+            setVacancies([]);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('nl-NL', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    };
-
     if (isLoading) {
         return (
-            <div className="vacancy-dashboard loading">
-                <div className="loader">Laden...</div>
+            <div className="vacancy-dashboard">
+                <div className="loading-animation">
+                    <div className="loading-spinner"></div>
+                    <p>Vacatures laden...</p>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="vacancy-dashboard">
-            <div className="dashboard-content">
-                <div className="vacancies-grid">
-                    {vacancies.length === 0 ? (
-                        // Alleen de nieuwe vacature kaart als er geen vacatures zijn
-                        <motion.div
-                            className="vacancy-card new-vacancy-card solo"
-                            onClick={() => navigate('/create-vacancy')}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            <div className="new-vacancy-content">
-                                <FaPlus className="plus-icon" />
-                                <p>Nieuwe Vacature</p>
-                                <span className="helper-text">
-                                    Start met het maken van je eerste vacature
-                                </span>
+            <div className="vacancies-grid">
+                <motion.div 
+                    className="vacancy-card new-vacancy"
+                    onClick={() => navigate('/create-vacancy')}
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    <div className="new-vacancy-content">
+                        <div className="icon-wrapper">
+                            <FaPlus />
+                        </div>
+                        <h3>Nieuwe Vacature</h3>
+                    </div>
+                </motion.div>
+
+                {vacancies.map((vacancy, index) => (
+                    <motion.div
+                        key={vacancy.id}
+                        className="vacancy-card"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ y: -4 }}
+                        onClick={() => navigate(`/vacancy/${vacancy.id}`)}
+                    >
+                        <div className="thumbnail">
+                            <img 
+                                src={vacancy.thumbnail || "https://placehold.co/400x225"} 
+                                alt={vacancy.title} 
+                            />
+                            <div className="status-overlay">
+                                <span className="status-badge">Actief</span>
                             </div>
-                        </motion.div>
-                    ) : (
-                        // Als er wel vacatures zijn, toon dan alles
-                        <>
-                            <motion.div
-                                className="vacancy-card new-vacancy-card"
-                                onClick={() => navigate('/create-vacancy')}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <div className="new-vacancy-content">
-                                    <FaPlus className="plus-icon" />
-                                    <p>Nieuwe Vacature</p>
+                        </div>
+                        <div className="vacancy-info">
+                            <h3>{vacancy.title}</h3>
+                            <div className="info-details">
+                                <div className="info-item">
+                                    <FaBuilding />
+                                    <span>{vacancy.company}</span>
                                 </div>
-                            </motion.div>
-
-                            {vacancies.map((vacancy) => (
-                                <motion.div
-                                    key={vacancy.id}
-                                    className="vacancy-card"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    whileHover={{ scale: 1.02 }}
-                                >
-                                    <div className="vacancy-header">
-                                        <h2>{vacancy.title}</h2>
-                                        <div className="company">
-                                            <FaBuilding />
-                                            <span>{vacancy.company}</span>
-                                        </div>
-                                        <div className="extra-info">
-                                            {vacancy.location}
-                                        </div>
-                                    </div>
-
-                                    <button 
-                                        onClick={() => navigate(`/vacancy/${vacancy.id}`)}
-                                        className="view-button"
-                                    >
-                                        Bekijk Details
-                                    </button>
-                                </motion.div>
-                            ))}
-                        </>
-                    )}
-                </div>
+                                <div className="info-item">
+                                    <FaMapMarkerAlt />
+                                    <span>{vacancy.location || 'Locatie onbekend'}</span>
+                                </div>
+                                <div className="info-item">
+                                    <FaCalendar />
+                                    <span>{new Date(vacancy.created_at).toLocaleDateString('nl-NL', {
+                                        day: 'numeric',
+                                        month: 'long',
+                                        year: 'numeric'
+                                    })}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                ))}
             </div>
         </div>
     );

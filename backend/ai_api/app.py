@@ -8,6 +8,11 @@ from services.vacature_generator import generate_vacature_text_as_html
 from services.cv_analyzer import extract_text_from_pdf, analyze_cv_match
 # Tijdelijk uitgeschakeld totdat whisper is geïnstalleerd
 # from services.transcription_service import transcription_bp
+import requests
+from services.cv_parser import extract_cv_data
+from services.candidate_matcher import find_matching_candidates
+from services.chat_service import get_ai_response
+from flask_cors import cross_origin
 
 
 load_dotenv()  # Laad environment variables
@@ -30,112 +35,152 @@ def home():
         'message': 'Recruivia API is running',
         'endpoints': [
             '/api/generate-vacancy',
-            '/api/analyze-match'
+            '/api/analyze-match',
+            '/api/parse-cv',
+            '/api/match-candidates',
+            '/api/chat'
         ]
     })
 
 @app.route('/api/generate-vacancy', methods=['POST'])
 def generate_vacancy():
     try:
+        # Ontvang de JSON-data
         data = request.get_json()
-        print("Received data:", data)  # Debug logging
-        
-        # Genereer de vacaturetekst met de ontvangen data
-        generated_html = generate_vacature_text_as_html(
-            functie=data['functie'],
-            organisatie=data['organisatie'],
-            salaris=data['salaris'],
-            secundaire_arbeidsvoorwaarden=data['secundaire_arbeidsvoorwaarden'],
-            specifieke_taken=data['specifieke_taken'],
-            soft_skills=data['soft_skills'],
-            hard_skills=data['hard_skills'],
-            organisatie_cultuur=data['organisatie_cultuur'],
-            collegas=data['collegas'],
-            geschiedenis=data['geschiedenis'],
-            sector=data['sector'],
-            kernactiviteit=data['kernactiviteit'],
-            doelen=data['doelen'],
-            missie_visie_kernwaarden=data['missie_visie_kernwaarden'],
-            maatschappelijke_bijdrage=data['maatschappelijke_bijdrage']
-        )
-        
+
+        # Debug: Print de ontvangen data
+        print("Received data:", json.dumps(data, indent=4))
+
+        # Standaardwaarden voor ontbrekende velden
+        input_data = {
+            "functie": data.get("functie", "Onbekende functie"), 
+            "locatie": data.get("locatie", "Onbekende locatie"), 
+            "organisatie": data.get("organisatie", "Onbekend bedrijf"), 
+            "salaris": data.get("salaris", "Nader te bepalen"), 
+            "uren": data.get("uren", "Niet gespecificeerd"), 
+            "secundaire_arbeidsvoorwaarden": data.get("secundaire_arbeidsvoorwaarden", "Niet vermeld"),
+            "specifieke_taken": data.get("specifieke_taken", []),
+            "soft_skills": data.get("soft_skills", "Niet gespecificeerd"), 
+            "hard_skills": data.get("hard_skills", []),  
+            "organisatie_cultuur": data.get("organisatie_cultuur", "Niet vermeld"), 
+            "team_samenstelling": data.get("team_samenstelling", "Niet vermeld"), 
+            "geschiedenis": data.get("geschiedenis", "Niet vermeld"), 
+            "sector": data.get("sector", "Algemeen"), 
+            "kernactiviteit": data.get("kernactiviteit", "Niet gespecificeerd"), 
+            "missie_visie_kernwaarden": data.get("missie_visie_kernwaarden", "Niet vermeld"), 
+            "maatschappelijke_bijdrage": data.get("maatschappelijke_bijdrage", "Niet gespecificeerd") 
+        } 
+
+        # Genereer de vacaturetekst
+        generated_html = generate_vacature_text_as_html(input_data)
+
+        # Debug: Print het gegenereerde HTML-resultaat
+        print("Generated HTML:", generated_html[:500])  # Print alleen de eerste 500 tekens
+
         return jsonify({
             'success': True,
             'html': generated_html
         })
-        
+
     except Exception as e:
         print("Error:", str(e))  # Debug logging
         return jsonify({
             'success': False,
             'error': str(e)
         }), 500
-
+    
 @app.route('/api/analyze-match', methods=['POST'])
 def analyze_match():
     try:
         if 'cv' not in request.files:
-            return jsonify({
-                'success': False,
-                'error': 'No CV file uploaded'
-            }), 400
-
+            return jsonify({'error': 'Geen CV bestand geüpload'}), 400
+        
         cv_file = request.files['cv']
         vacancy_id = request.form.get('vacancy_id')
+        
+        if not vacancy_id:
+            return jsonify({'error': 'Geen vacature ID opgegeven'}), 400
 
-        # Hier zou je normaal de vacature details uit je database halen
-        # Voor nu gebruiken we dummy data
-        vacancy_details = {
-            "1": {
-                "title": "Senior React Developer",
-                "required_skills": ["React", "TypeScript", "Node.js", "REST APIs"],
-                "experience": "5+ years",
-                "education": "Bachelor's degree in Computer Science or equivalent"
-            },
-            "2": {
-                "title": "UX Designer",
-                "required_skills": ["Figma", "User Research", "Wireframing", "Prototyping"],
-                "experience": "3+ years",
-                "education": "Bachelor's degree in Design or equivalent"
-            },
-            "3": {
-                "title": "Product Manager",
-                "required_skills": ["Agile", "Product Strategy", "Data Analysis", "Stakeholder Management"],
-                "experience": "4+ years",
-                "education": "Bachelor's degree in Business or equivalent"
-            }
-        }
+        # Haal vacature details op van de Symfony backend
+        vacancy_response = requests.get(f'http://localhost:8000/api/vacancies/{vacancy_id}')
+        if not vacancy_response.ok:
+            return jsonify({'error': 'Kon vacature niet ophalen'}), 400
+        
+        vacancy_details = vacancy_response.json()
 
-        if vacancy_id not in vacancy_details:
-            return jsonify({
-                'success': False,
-                'error': 'Invalid vacancy ID'
-            }), 400
-
-        # Extract text from PDF
+        # Extraheer tekst uit PDF
         cv_text = extract_text_from_pdf(cv_file)
         
-        # Analyze the match
-        analysis_result = analyze_cv_match(cv_text, json.dumps(vacancy_details[vacancy_id]))
+        # Analyseer de match
+        analysis_result = analyze_cv_match(cv_text, vacancy_details['description'])
         
-        # Parse the JSON response from GPT
-        analysis_data = json.loads(analysis_result)
-        
-        return jsonify({
-            'success': True,
-            'match_percentage': analysis_data.get('match_percentage', 0),
-            'matching_skills': analysis_data.get('matching_skills', []),
-            'missing_skills': analysis_data.get('missing_skills', []),
-            'recommendations': analysis_data.get('recommendations', '')
-        })
+        return jsonify(analysis_result)
 
     except Exception as e:
         print(f"Error in analyze_match: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/parse-cv', methods=['POST'])
+def parse_cv():
+    if 'cv' not in request.files:
+        return jsonify({'error': 'Geen CV bestand ontvangen'}), 400
+    
+    cv_file = request.files['cv']
+    result = extract_cv_data(cv_file)
+    return jsonify(result)
+
+@app.route('/api/match-candidates', methods=['POST'])
+def match_candidates():
+    try:
+        data = request.json
+        vacancy = data.get('vacancy')
+        candidates = data.get('candidates')
+        
+        if not vacancy or not candidates:
+            return jsonify({'error': 'Vacancy en candidates zijn verplicht'}), 400
+            
+        matches = find_matching_candidates(vacancy, candidates)
+        return jsonify(matches)
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/chat', methods=['POST', 'OPTIONS'])
+@cross_origin()
+def chat():
+    try:
+        data = request.json
+        message = data.get('message', '')
+
+        # Probeer kandidaat data op te halen, maar ga door als het niet lukt
+        try:
+            response = requests.get('http://localhost:8000/api/candidates')
+            candidate_data = response.json() if response.ok else None
+        except:
+            candidate_data = None
+            print("Kon geen verbinding maken met kandidaten API")
+
+        # Haal conversation history op als die bestaat
+        conversation_history = data.get('conversation_history', [])
+
+        # Krijg antwoord van de AI
+        response = get_ai_response(
+            message=message,
+            candidate_data=candidate_data,
+            conversation_history=conversation_history
+        )
+
         return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
+            'response': response
+        })
+
+    except Exception as e:
+        print(f"Error in chat endpoint: {str(e)}")
+        # Stuur 200 OK met foutbericht in plaats van 500
+        return jsonify({
+            'response': "Er lijkt iets mis te gaan met de verbinding. Probeer het over een paar minuten opnieuw of neem contact op met de support als het probleem aanhoudt."
+        }), 200
 
 if __name__ == '__main__':
-    print("Starting Flask server...")  # Debug logging
+    print("Starting Flask server...")
     app.run(debug=True, port=5000) 
